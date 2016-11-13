@@ -1,13 +1,13 @@
 <?php namespace InvoiceNinja\Models;
 
 use Exception;
+use InvoiceNinja\Config;
 
 class RemoteModel
 {
-    public static $token;
-    public static $url;
-    public static $route;
-    public static $include;
+    protected static $route;
+    protected static $include;
+    protected static $options = [];
 
     public $id;
 
@@ -36,6 +36,11 @@ class RemoteModel
         $data = static::sendRequest();
 
         return static::hydrate($data);
+    }
+
+    public static function whereClientId($clientId)
+    {
+        static::$options['client_id'] = $clientId;
     }
 
     /**
@@ -87,7 +92,7 @@ class RemoteModel
             throw new Exception('API route is not defined for ' . get_called_class());
         }
 
-        return sprintf('%s/%s', static::$url, static::$route);
+        return sprintf('%s/%s', Config::getUrl(), static::$route);
     }
 
     protected static function hydrate($item, $entity = false)
@@ -104,14 +109,16 @@ class RemoteModel
         return $entity;
     }
 
-    protected static function sendRequest($url, $data = false, $type = 'GET')
+    protected static function sendRequest($url, $data = false, $type = 'GET', $raw = false)
     {
         $data = json_encode($data);
         $curl = curl_init();
 
-        if (static::$include) {
-            $url .= '?include=' . static::$include;
-        }
+        $options = array_merge(static::$options, [
+            'include' => static::$include,
+            'per_page' => Config::getPerPage()
+        ]);
+        $url .= '?' . http_build_query($options);
 
         $opts = [
             CURLOPT_URL => $url,
@@ -122,22 +129,23 @@ class RemoteModel
             CURLOPT_HTTPHEADER  => [
                 'Content-Type: application/json',
                 'Content-Length: ' . strlen($data),
-                'X-Ninja-Token: '. static::$token,
+                'X-Ninja-Token: '. Config::getToken(),
             ],
         ];
 
         curl_setopt_array($curl, $opts);
         $response = curl_exec($curl);
-        curl_close($curl);
 
-        $response = json_decode($response);
-
-        if ($response && property_exists($response, 'data')) {
-            return $response->data;
+        if ($raw) {
+            return $response;
         } else {
-            throw new Exception($response);
+            $json = json_decode($response);
+            if ($json && property_exists($json, 'data')) {
+                return $json->data;
+            } else {
+                throw new Exception($response);
+            }
         }
-
     }
 
 }

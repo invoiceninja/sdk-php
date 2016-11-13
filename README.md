@@ -1,6 +1,6 @@
 # Invoice Ninja SDK
 
-### Install
+### Installation
 
 Add the Invoice Ninja SDK
 
@@ -14,8 +14,6 @@ Add the Invoice Ninja SDK
     NinjaConfig::setURL('http://ninja.dev/api/v1');
     NinjaConfig::setToken('Your Token');
 
-
-
 ### Search
 
 Find all clients
@@ -25,6 +23,10 @@ Find all clients
 Find one client by it's id
 
     $client = Client::find(1);
+
+Download an invoice PDF
+
+    $pdf = $invoice->download();
 
 ### Create and Update
 
@@ -60,7 +62,6 @@ Create an invoice
 - Vendors
 - Expenses
 - TaxRates
-
 
 ## To Do
 

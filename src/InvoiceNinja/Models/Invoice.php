@@ -25,4 +25,12 @@ class Invoice extends RemoteModel
 
         $this->invoice_items[] = $item;
     }
+
+    public function download()
+    {
+        $url = static::getRoute() . '/' . $this->id;
+        $url = str_replace('invoices', 'download', $url);
+        //throw new \Exception($url);
+        return static::sendRequest($url, false, 'GET', true);
+    }
 }

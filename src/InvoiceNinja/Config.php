@@ -1,16 +1,39 @@
 <?php namespace InvoiceNinja;
 
-use InvoiceNinja\Models\RemoteModel;
-
 class Config
 {
+    private static $token;
+    private static $url;
+    private static $perPage;
+
     public static function setToken($token)
     {
-        RemoteModel::$token = $token;
+        static::$token = $token;
+    }
+
+    public static function getToken()
+    {
+        return static::$token;
     }
 
     public static function setUrl($url)
     {
-        RemoteModel::$url = rtrim($url, '/');
+        static::$url = rtrim($url, '/');
     }
+
+    public static function getUrl()
+    {
+        return static::$url;
+    }
+
+    public static function setPerPage($perPage)
+    {
+        static::$perPage = $perPage;
+    }
+
+    public static function getPerPage()
+    {
+        return static::$perPage;
+    }
+
 }

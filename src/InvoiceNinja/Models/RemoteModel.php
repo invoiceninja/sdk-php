@@ -5,6 +5,7 @@ use Exception;
 class RemoteModel
 {
     public static $route = false;
+    public static $include = false;
 
     public $id;
 
@@ -81,6 +82,10 @@ class RemoteModel
     {
         $data = json_encode($data);
         $curl = curl_init();
+
+        if (static::$include) {
+            $url .= '?include=' . static::$include;
+        }
 
         $opts = [
             CURLOPT_URL => $url,

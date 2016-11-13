@@ -19,17 +19,17 @@ Add the Invoice Ninja SDK
 - To connect to the hosted version use `https://app.invoiceninja.com/api/v1` as the URL.
 - You can either use the [free hosted trial](https://app.invoiceninja.com/invoice_now?sign_up=true&redirect_to=/settings/api_tokens) or [install the app](https://www.invoiceninja.com/self-host/) to create an API token.
 
-### Search
+### Retrieving Models
 
-Find all clients
+Retrieve all clients
 
     $clients = Client::all();
 
-Find one client by it's id
+Retrieve a client by its primary key.
 
     $client = Client::find(1);
 
-### Create and Update
+### Inserting & Updating Models
 
 Create a new client
 
@@ -51,7 +51,7 @@ Download an invoice PDF
 
     $pdf = $invoice->download();
 
-### Archive, Delete and Restore
+### Deleting Models
 
     $client->archive();
     $client->delete();

@@ -1,0 +1,22 @@
+{
+    "name": "invoiceninja/sdk-php",
+    "description": "PHP SDK to create a custom module for Invoice Ninja",
+    "keywords": [
+        "invoice"
+    ],
+    "homepage": "https://www.invoiceninja.com",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hillel Coren",
+            "email": "hillelcoren@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "InvoiceNinja\\": "src/InvoiceNinja/"
+        }
+    },
+    "require": {}
+}

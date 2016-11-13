@@ -32,7 +32,7 @@ Download an invoice PDF
 
 Create a new client
 
-    $client = new Client("test@example.com");
+    $client = new Client('test@example.com');
     $client->save();
 
 Update an existing client

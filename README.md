@@ -1,5 +1,7 @@
 # Invoice Ninja SDK
 
+**We're starting work on custom modules, join the discussion [here](https://github.com/invoiceninja/invoiceninja/issues/1131).**
+
 ### Installation
 
 Add the Invoice Ninja SDK

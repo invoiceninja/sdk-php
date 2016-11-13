@@ -4,8 +4,10 @@ use Exception;
 
 class RemoteModel
 {
-    public static $route = false;
-    public static $include = false;
+    public static $token;
+    public static $url;
+    public static $route;
+    public static $include;
 
     public $id;
 
@@ -55,16 +57,40 @@ class RemoteModel
         return static::hydrate($data, $this);
     }
 
-    private static function getRoute()
+    public function archive()
+    {
+        return $this->sendAction('archive');
+    }
+
+    public function restore()
+    {
+        return $this->sendAction('restore');
+    }
+
+    public function delete()
+    {
+        return $this->sendAction('delete');
+    }
+
+    protected function sendAction($action)
+    {
+        $url = sprintf('%s/%s?action=%s', static::getRoute(), $this->id, $action);
+
+        $data = static::sendRequest($url, $this, 'PUT');
+
+        return static::hydrate($data, $this);
+    }
+
+    protected static function getRoute()
     {
         if ( ! static::$route) {
             throw new Exception('API route is not defined for ' . get_called_class());
         }
 
-        return sprintf('%s/api/v1/%s', $_ENV['NINJA_URL'], static::$route);
+        return sprintf('%s/%s', static::$url, static::$route);
     }
 
-    private static function hydrate($item, $entity = false)
+    protected static function hydrate($item, $entity = false)
     {
         if ( ! $entity) {
             $className = get_called_class();
@@ -78,7 +104,7 @@ class RemoteModel
         return $entity;
     }
 
-    private static function sendRequest($url, $data = false, $type = 'GET')
+    protected static function sendRequest($url, $data = false, $type = 'GET')
     {
         $data = json_encode($data);
         $curl = curl_init();
@@ -96,7 +122,7 @@ class RemoteModel
             CURLOPT_HTTPHEADER  => [
                 'Content-Type: application/json',
                 'Content-Length: ' . strlen($data),
-                'X-Ninja-Token: '. $_ENV['NINJA_TOKEN'],
+                'X-Ninja-Token: '. static::$token,
             ],
         ];
 
@@ -104,7 +130,14 @@ class RemoteModel
         $response = curl_exec($curl);
         curl_close($curl);
 
-        return json_decode($response)->data;
+        $response = json_decode($response);
+
+        if ($response && property_exists($response, 'data')) {
+            return $response->data;
+        } else {
+            throw new Exception($response);
+        }
+
     }
 
 }

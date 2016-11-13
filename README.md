@@ -11,7 +11,7 @@ Add the Invoice Ninja SDK
     use InvoiceNinja\Config as NinjaConfig;
     use InvoiceNinja\Models\Client;
 
-    NinjaConfig::setURL('http://ninja.dev/api/v1');
+    NinjaConfig::setURL('https://ninja.dev/api/v1');
     NinjaConfig::setToken('Your Token');
 
 ### Search

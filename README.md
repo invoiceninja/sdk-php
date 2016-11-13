@@ -16,8 +16,8 @@ Add the Invoice Ninja SDK
     NinjaConfig::setURL('https://ninja.dev/api/v1');
     NinjaConfig::setToken('Your Token');
 
-- To connect to the hosted version use `https://app.invoiceninja.com` as the URL.
-- You can use the [free hosted trial](https://app.invoiceninja.com/invoice_now?sign_up=true&redirect_to=/settings/api_tokens) or [install the app](https://www.invoiceninja.com/self-host/) locally to create an API token.
+- To connect to the hosted version use `https://app.invoiceninja.com/api/v1` as the URL.
+- You can use the [free hosted trial](https://app.invoiceninja.com/invoice_now?sign_up=true&redirect_to=/settings/api_tokens) or [install the app](https://www.invoiceninja.com/self-host/) to create an API token.
 
 ### Search
 

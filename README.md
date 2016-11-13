@@ -24,10 +24,6 @@ Find one client by it's id
 
     $client = Client::find(1);
 
-Download an invoice PDF
-
-    $pdf = $invoice->download();
-
 ### Create and Update
 
 Create a new client
@@ -45,6 +41,10 @@ Create an invoice
     $invoice = $client->createInvoice();
     $invoice->addInvoiceItem('Item', 'Some notes', 10);
     $invoice->save();
+
+Download an invoice PDF
+
+    $pdf = $invoice->download();
 
 ### Archive, Delete and Restore
 

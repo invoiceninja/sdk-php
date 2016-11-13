@@ -1,2 +1,3 @@
 # module
-Starter project to create a custom module
+
+Invoice Ninja PHP SDK

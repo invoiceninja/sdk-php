@@ -72,7 +72,7 @@ Download an invoice PDF
 
 Register subscription for new client
 
-    Client::subscribeCreate('http://example.com/hook/client_created');
+    Client::subscribeCreate('http://example.com/...');
 
 Convert posted data to a model
 

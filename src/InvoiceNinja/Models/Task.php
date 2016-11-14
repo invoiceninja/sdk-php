@@ -1,6 +1,6 @@
 <?php namespace InvoiceNinja\Models;
 
-class TaxRate extends RemoteModel
+class TaxRate extends AbstractModel
 {
     public static $route = 'tasks';
 }

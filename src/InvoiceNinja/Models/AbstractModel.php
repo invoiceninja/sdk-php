@@ -3,7 +3,7 @@
 use Exception;
 use InvoiceNinja\Config;
 
-class RemoteModel
+class AbstractModel
 {
     protected static $route;
     protected static $include;
@@ -28,7 +28,7 @@ class RemoteModel
     }
 
     /**
-    * @return \InvoiceNinja\Models\RemoteModel
+    * @return \InvoiceNinja\Models\AbstractModel
     */
     public static function find($id)
     {
@@ -44,7 +44,7 @@ class RemoteModel
     }
 
     /**
-    * @return \InvoiceNinja\Models\RemoteModel
+    * @return \InvoiceNinja\Models\AbstractModel
     */
     public function save()
     {

@@ -2,7 +2,7 @@
 
 use stdClass;
 
-class Invoice extends RemoteModel
+class Invoice extends AbstractModel
 {
     public static $route = 'invoices';
     public static $include = 'invitations';

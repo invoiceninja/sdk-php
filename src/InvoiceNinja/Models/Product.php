@@ -1,6 +1,6 @@
 <?php namespace InvoiceNinja\Models;
 
-class Product extends RemoteModel
+class Product extends AbstractModel
 {
     public static $route = 'products';
 }

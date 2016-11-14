@@ -1,6 +1,6 @@
 <?php namespace InvoiceNinja\Models;
 
-class Vendor extends RemoteModel
+class Vendor extends AbstractModel
 {
     public static $route = 'vendors';
 }

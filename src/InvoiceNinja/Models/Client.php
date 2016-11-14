@@ -2,7 +2,7 @@
 
 use stdClass;
 
-class Client extends RemoteModel
+class Client extends AbstractModel
 {
     public static $route = 'clients';
     public $contacts = [];

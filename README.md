@@ -19,6 +19,17 @@ Add the Invoice Ninja SDK
 - To connect to the hosted version use `https://app.invoiceninja.com/api/v1` as the URL.
 - You can either use the [free hosted trial](https://app.invoiceninja.com/invoice_now?sign_up=true&redirect_to=/settings/api_tokens) or [install the app](https://www.invoiceninja.com/self-host/) to create an API token.
 
+### Supports
+
+- Clients
+- Invoices/Quotes
+- Products
+- Payments
+- Tasks
+- Vendors
+- Expenses
+- TaxRates
+
 ### Retrieving Models
 
 Retrieve all clients
@@ -57,19 +68,19 @@ Download an invoice PDF
     $client->delete();
     $client->restore();
 
-### Supports
+## Events
 
-- Clients
-- Invoices/Quotes
-- Products
-- Payments
-- Tasks
-- Vendors
-- Expenses
-- TaxRates
+Register subscription for new client
+
+    Client::subscribeCreate('http://example.com/hook/client_created');
+
+Convert posted data to a model
+
+    $client = Client::hydrate($input);
+
+*Currently supported for clients, invoices, quotes and payments*
 
 ## To Do
 
-- Support registering for events
-- Improve error handling
+- Improve validation and error handling
 - Create documentation

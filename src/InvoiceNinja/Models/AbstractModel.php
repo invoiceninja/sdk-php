@@ -77,6 +77,22 @@ class AbstractModel
         return $this->sendAction('delete');
     }
 
+    public static function subscribeCreate($target)
+    {
+        $url = Config::getUrl() . '/hooks';
+        $data = [
+            'event' => 'create_' . static::entityType(),
+            'target_url' => $target
+        ];
+
+        static::sendRequest($url, $data, 'POST', true);
+    }
+
+    protected static function entityType()
+    {
+        return rtrim(static::$route, 's');
+    }
+
     protected function sendAction($action)
     {
         $url = sprintf('%s/%s?action=%s', static::getRoute(), $this->id, $action);
@@ -95,7 +111,7 @@ class AbstractModel
         return sprintf('%s/%s', Config::getUrl(), static::$route);
     }
 
-    protected static function hydrate($item, $entity = false)
+    public static function hydrate($item, $entity = false)
     {
         if ( ! $entity) {
             $className = get_called_class();

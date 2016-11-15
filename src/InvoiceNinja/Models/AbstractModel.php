@@ -38,11 +38,13 @@ class AbstractModel
         return static::hydrate($data);
     }
 
+    /*
     public static function whereClientId($clientId)
     {
         static::$options['client_id'] = $clientId;
     }
-
+    */
+    
     /**
     * @return \InvoiceNinja\Models\AbstractModel
     */

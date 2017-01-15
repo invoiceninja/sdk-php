@@ -1,7 +1,5 @@
 # Invoice Ninja SDK
 
-**We're starting work on custom modules, join the discussion [here](https://github.com/invoiceninja/invoiceninja/issues/1131).**
-
 ### Installation
 
 Add the Invoice Ninja SDK
@@ -79,8 +77,3 @@ Convert posted data to a model
     $client = Client::hydrate($input);
 
 *Currently supported for clients, invoices, quotes and payments*
-
-## To Do
-
-- Improve validation and error handling
-- Create documentation

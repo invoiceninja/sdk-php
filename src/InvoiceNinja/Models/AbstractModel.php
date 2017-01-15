@@ -33,7 +33,7 @@ class AbstractModel
     public static function find($id)
     {
         $url = static::getRoute() . '/' . $id;
-        $data = static::sendRequest();
+        $data = static::sendRequest($url);
 
         return static::hydrate($data);
     }
@@ -44,7 +44,7 @@ class AbstractModel
         static::$options['client_id'] = $clientId;
     }
     */
-    
+
     /**
     * @return \InvoiceNinja\Models\AbstractModel
     */

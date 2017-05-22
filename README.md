@@ -27,6 +27,7 @@ Add the Invoice Ninja SDK
 - Vendors
 - Expenses
 - TaxRates
+- Credits
 
 ### Retrieving Models
 

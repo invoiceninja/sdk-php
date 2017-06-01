@@ -1,6 +1,6 @@
 <?php namespace InvoiceNinja\Models;
 
-class Product extends AbstractModel
+class TaxRate extends AbstractModel
 {
-    public static $route = 'products';
+    public static $route = 'tax_rates';
 }

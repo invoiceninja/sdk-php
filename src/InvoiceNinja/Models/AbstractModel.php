@@ -136,7 +136,12 @@ class AbstractModel
             'include' => static::$include,
             'per_page' => Config::getPerPage()
         ]);
-        $url .= '?' . http_build_query($options);
+
+        $parsedUrl = parse_url($url);
+        $separator = ($parsedUrl['query'] == NULL) ? '?' : '&';
+
+        $url .= $separator . http_build_query($options);
+
 
         $opts = [
             CURLOPT_URL => $url,

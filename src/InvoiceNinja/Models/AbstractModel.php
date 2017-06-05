@@ -37,6 +37,17 @@ class AbstractModel
 
         return static::hydrate($data);
     }
+    
+    /**
+    * @return \InvoiceNinja\Models\AbstractModel
+    */
+    public function findByClientID($id)
+    {
+        $url = sprintf('%s/?client_id=%s', static::getRoute(), $id);
+        $data = static::sendRequest($url);
+
+        return static::hydrate($data);
+    }
 
     /*
     public static function whereClientId($clientId)

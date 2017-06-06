@@ -37,6 +37,17 @@ class AbstractModel
 
         return static::hydrate($data);
     }
+    
+    /**
+    * @return \InvoiceNinja\Models\AbstractModel
+    */
+    public function findByClientID($id)
+    {
+        $url = sprintf('%s/?client_id=%s', static::getRoute(), $id);
+        $data = static::sendRequest($url);
+
+        return static::hydrate($data);
+    }
 
     /*
     public static function whereClientId($clientId)
@@ -136,7 +147,12 @@ class AbstractModel
             'include' => static::$include,
             'per_page' => Config::getPerPage()
         ]);
-        $url .= '?' . http_build_query($options);
+
+        $parsedUrl = parse_url($url);
+        $separator = ($parsedUrl['query'] == NULL) ? '?' : '&';
+
+        $url .= $separator . http_build_query($options);
+
 
         $opts = [
             CURLOPT_URL => $url,

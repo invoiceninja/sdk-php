@@ -144,6 +144,7 @@ class AbstractModel
             CURLOPT_CUSTOMREQUEST => $type,
             CURLOPT_POST => $type === 'POST' ? 1 : 0,
             CURLOPT_POSTFIELDS => $data,
+            CURLOPT_USERAGENT => 'Invoice Ninja - PHP SDK',
             CURLOPT_HTTPHEADER  => [
                 'Content-Type: application/json',
                 'Content-Length: ' . strlen($data),

@@ -46,7 +46,12 @@ class AbstractModel
         $url = sprintf('%s/?client_id=%s', static::getRoute(), $id);
         $data = static::sendRequest($url);
 
-        return static::hydrate($data);
+        $result = [];
+        foreach ($data as $item) {
+            $result[] = static::hydrate($item);
+        }
+
+        return $result;
     }
 
     /*

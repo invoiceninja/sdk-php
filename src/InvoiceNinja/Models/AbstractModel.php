@@ -154,7 +154,7 @@ class AbstractModel
         ]);
 
         $parsedUrl = parse_url($url);
-        $separator = ($parsedUrl['query'] == NULL) ? '?' : '&';
+        $separator = (!isset($parsedUrl['query']) || $parsedUrl['query'] == NULL) ? '?' : '&';
 
         $url .= $separator . http_build_query($options);
 

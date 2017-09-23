@@ -78,3 +78,33 @@ Convert posted data to a model
     $client = Client::hydrate($input);
 
 *Currently supported for clients, invoices, quotes and payments*
+
+## Statics
+
+*Retrieve the static dataset Invoice Ninja uses*
+
+Get all statics
+
+    Statics::all();
+
+Get specific static
+
+    Statics::countries();
+
+List of available statics
+
+    Statics::currencies();
+    Statics::sizes();
+    Statics::timezones();
+    Statics::dateFormats();
+    Statics::datetimeFormats();
+    Statics::languages();
+    Statics::paymentTerms();
+    Statics::paymentTypes();
+    Statics::countries();
+    Statics::invoiceDesigns();
+    Statics::invoiceStatus();
+    Statics::frequencies();
+    Statics::gateways();
+    Statics::fonts();
+    Statics::banks();

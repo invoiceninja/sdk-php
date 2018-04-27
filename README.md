@@ -75,6 +75,7 @@ Register subscription for new client
 
 Convert posted data to a model
 
+    $input = file_get_contents('php://input'); 
     $client = Client::hydrate($input);
 
 *Currently supported for clients, invoices, quotes and payments*

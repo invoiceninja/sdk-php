@@ -8,6 +8,8 @@ Add the Invoice Ninja SDK
 
 ### Setup
 
+    require __DIR__ . '/vendor/autoload.php';
+
     use InvoiceNinja\Config as NinjaConfig;
     use InvoiceNinja\Models\Client;
 

@@ -29,7 +29,7 @@ class Invoice extends AbstractModel
     public function download()
     {
         $url = static::getRoute() . '/' . $this->id;
-        $url = str_replace('invoices', 'download', $url);
+        $url = str_replace('/invoices/', '/download/', $url);
         
         return static::sendRequest($url, false, 'GET', true);
     }

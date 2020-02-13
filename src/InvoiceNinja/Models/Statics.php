@@ -6,16 +6,16 @@ class Statics extends AbstractModel
 {
     public static $route = 'static';
 
-    public static function all()
+    public static function all($raw = false)
     {
-        $url = static::getRoute() . '/';
-        
-        return static::sendRequest($url, false, 'GET', true);
+        $url = static::getRoute();
+
+        return static::sendRequest($url, false, 'GET', $raw);
     }
 
     public static function get($static)
     {
-        return json_decode(static::all(), true)['data'][$static];
+        return json_decode(static::all(true), true)['data'][$static];
     }
 
     public static function countries()

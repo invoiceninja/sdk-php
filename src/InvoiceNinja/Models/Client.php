@@ -13,12 +13,13 @@ class Client extends AbstractModel
         $this->addContact($email, $first_name, $last_name);
     }
 
-    public function addContact($email = '', $first_name = '', $last_name = '')
+    public function addContact($email = '', $first_name = '', $last_name = '', $phone = '')
     {
         $contact = new stdClass();
         $contact->email = $email;
         $contact->first_name = $first_name;
         $contact->last_name = $last_name;
+        $contact->phone = $phone;
 
         $this->contacts[] = $contact;
     }

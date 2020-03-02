@@ -12,6 +12,17 @@ class AbstractModel
     public $id;
 
     /**
+     * Create method to bypass models constructors
+     * @return AbstractModel
+     * @throws \ReflectionException
+     */
+    public static function create()
+    {
+        $rc = new \ReflectionClass(get_called_class());
+        return $rc->newInstanceWithoutConstructor();
+    }
+
+    /**
     * @return array
     */
     public static function all()

@@ -133,6 +133,39 @@ class AbstractModel
         static::sendRequest($url, $data, 'POST', true);
     }
 
+    public static function subscribeUpdate($target)
+    {
+        $url = Config::getUrl() . '/hooks';
+        $data = [
+            'event' => 'update_' . static::entityType(),
+            'target_url' => $target
+        ];
+
+        static::sendRequest($url, $data, 'POST', true);
+    }
+
+    public static function subscribeDelete($target)
+    {
+        $url = Config::getUrl() . '/hooks';
+        $data = [
+            'event' => 'delete_' . static::entityType(),
+            'target_url' => $target
+        ];
+
+        static::sendRequest($url, $data, 'POST', true);
+    }
+
+    public static function subscribeApprove($target)
+    {
+        $url = Config::getUrl() . '/hooks';
+        $data = [
+            'event' => 'approve_' . static::entityType(),
+            'target_url' => $target
+        ];
+
+        static::sendRequest($url, $data, 'POST', true);
+    }
+
     protected static function entityType()
     {
         return rtrim(static::$route, 's');

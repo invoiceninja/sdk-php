@@ -42,6 +42,12 @@ Retrieve a client by its primary key.
 ```php
     $client = Client::find(1);
 ```
+
+Retrieving an invoice by it's number:
+```php
+Invoice::findByCustomQuery(["invoice_number" => "0123"]);
+```
+
 ### Inserting & Updating Models
 
 Create a new client

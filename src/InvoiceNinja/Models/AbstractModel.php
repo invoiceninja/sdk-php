@@ -81,6 +81,26 @@ class AbstractModel
         return $result;
     }
     
+    
+
+    /**
+    * @param array $fields Array of fields to filter by. For example, ["invoice_number" => "0123"] or ["email" => "test@example.com"].
+    * @return \InvoiceNinja\Models\AbstractModel
+    */
+    public static function findByCustomQuery($fields)
+    {
+        $query = http_build_query($fields);
+        $url = sprintf('%s?%s', static::getRoute(), $query);
+        $data = static::sendRequest($url);
+
+        $result = [];
+        foreach ($data as $item) {
+            $result[] = static::hydrate($item);
+        }
+
+        return $result;
+    }
+    
     /*
     public static function whereClientId($clientId)
     {

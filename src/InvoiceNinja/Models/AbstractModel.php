@@ -141,6 +141,11 @@ class AbstractModel
     {
         return $this->sendAction('delete');
     }
+    
+    public function convert()
+    {
+        return $this->sendAction('convert');
+    }
 
     public static function subscribeCreate($target)
     {

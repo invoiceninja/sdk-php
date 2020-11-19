@@ -33,4 +33,9 @@ class Invoice extends AbstractModel
         
         return static::sendRequest($url, false, 'GET', true);
     }
+
+    public function convert() 
+    {
+        return $this->sendAction('convert');
+    }
 }

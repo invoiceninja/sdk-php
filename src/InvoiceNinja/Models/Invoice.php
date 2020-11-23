@@ -41,9 +41,9 @@ class Invoice extends AbstractModel
 
     public function send() 
     {
-        $url = static::getRoute() . '/' . $this->id;
+        $url = static::getRoute();
         $url = str_replace('/invoices/', '/email_invoice/', $url);
 
-        return static::sendRequest($url, false, 'GET', true);
+        return static::sendRequest($url, ['id' => $this->id], 'POST', false);
     }
 }

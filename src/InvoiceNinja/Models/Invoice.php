@@ -1,7 +1,6 @@
 <?php namespace InvoiceNinja\Models;
 
 use stdClass;
-use InvoiceNinja\Config;
 
 class Invoice extends AbstractModel
 {

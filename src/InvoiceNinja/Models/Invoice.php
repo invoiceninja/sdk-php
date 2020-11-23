@@ -1,6 +1,7 @@
 <?php namespace InvoiceNinja\Models;
 
 use stdClass;
+use InvoiceNinja\Config;
 
 class Invoice extends AbstractModel
 {
@@ -37,5 +38,13 @@ class Invoice extends AbstractModel
     public function convert() 
     {
         return $this->sendAction('convert');
+    }
+
+    public function send() 
+    {
+        $url = static::getRoute() . '/' . $this->id;
+        $url = str_replace('/invoices/', '/email_invoice/', $url);
+
+        return static::sendRequest($url, false, 'GET', true);
     }
 }

@@ -230,7 +230,8 @@ class AbstractModel
 
         $options = array_merge(static::$options, [
             'include' => static::$include,
-            'per_page' => Config::getPerPage()
+            'per_page' => Config::getPerPage(),
+            'page' => Config::getPage()
         ]);
 
         $parsedUrl = parse_url($url);

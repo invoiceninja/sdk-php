@@ -16,6 +16,8 @@ Add the Invoice Ninja SDK
 
     NinjaConfig::setURL('https://ninja.dev/api/v1');
     NinjaConfig::setToken('Your Token');
+    NinjaConfig::setPerPage(15);
+    NinjaConfig::setPage(1);
 ```
 - To connect to the hosted version use `https://app.invoiceninja.com/api/v1` as the URL.
 - You can either use the [free hosted trial](https://app.invoiceninja.com/invoice_now?sign_up=true&redirect_to=/settings/api_tokens) or [install the app](https://www.invoiceninja.com/self-host/) to create an API token.
@@ -34,10 +36,14 @@ Add the Invoice Ninja SDK
 
 ### Retrieving Models
 
+Pagination  
+To iterate through more than 1 page of results, increment `NinjaConfig::setPage(1)` value until an empty array of results is returned.  Adjust the number of results per page using the `NinjaConfig::setPerPage(15);` value *(maximum 500)*.
+
 Retrieve all clients
 ```php
     $clients = Client::all();
 ```
+
 Retrieve a client by its primary key.
 ```php
     $client = Client::find(1);

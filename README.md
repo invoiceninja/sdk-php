@@ -37,7 +37,7 @@ Add the Invoice Ninja SDK
 ### Retrieving Models
 
 Pagination  
-To iterate through more than 1 page of results, increment `NinjaConfig::setPage(1)` value until an empty array of results is returned.  Adjust the number of results per page using the `NinjaConfig::setPerPage(15);` value *(maximum 500)*.
+To iterate through more than 1 page of results, increment `NinjaConfig::setPage(1)` value until an empty array of results is returned.  Adjust the number of results per page using the `NinjaConfig::setPerPage(15);` value *(maximum 5000)*.
 
 Retrieve all clients
 ```php

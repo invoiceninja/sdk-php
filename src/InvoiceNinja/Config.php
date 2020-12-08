@@ -36,4 +36,13 @@ class Config
         return static::$perPage;
     }
 
+    public static function setPage($page)
+    {
+        static::$page = $page;
+    }
+
+    public static function getPage()
+    {
+        return static::$page;
+    }    
 }

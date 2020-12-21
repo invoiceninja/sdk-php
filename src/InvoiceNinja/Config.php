@@ -5,6 +5,7 @@ class Config
     private static $token;
     private static $url;
     private static $perPage;
+    private static $page;
 
     public static function setToken($token)
     {
@@ -44,5 +45,5 @@ class Config
     public static function getPage()
     {
         return static::$page;
-    }    
+    }
 }

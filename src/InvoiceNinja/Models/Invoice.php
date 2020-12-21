@@ -30,19 +30,19 @@ class Invoice extends AbstractModel
     {
         $url = static::getRoute() . '/' . $this->id;
         $url = str_replace('/invoices/', '/download/', $url);
-        
+
         return static::sendRequest($url, false, 'GET', true);
     }
 
-    public function convert() 
+    public function convert()
     {
         return $this->sendAction('convert');
     }
 
-    public function send() 
+    public function send()
     {
         $url = static::getRoute();
-        $url = str_replace('/invoices/', '/email_invoice/', $url);
+        $url = str_replace('/invoices', '/email_invoice', $url);
 
         return static::sendRequest($url, ['id' => $this->id], 'POST', true);
     }

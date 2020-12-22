@@ -71,6 +71,7 @@ class AbstractModel
     public static function findByClientEmail($id)
     {
         $url = sprintf('%s?email=%s', static::getRoute(), $id);
+        $url = str_replace("+", "%2B", $url);
         $data = static::sendRequest($url);
 
         $result = [];
@@ -80,8 +81,6 @@ class AbstractModel
 
         return $result;
     }
-    
-    
 
     /**
     * @param array $fields Array of fields to filter by. For example, ["invoice_number" => "0123"] or ["email" => "test@example.com"].
@@ -100,7 +99,7 @@ class AbstractModel
 
         return $result;
     }
-    
+
     /*
     public static function whereClientId($clientId)
     {

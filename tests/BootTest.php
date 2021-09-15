@@ -20,6 +20,7 @@ class BootTest extends TestCase
 
     public function testClients()
     {
+        
         $ninja = new InvoiceNinja("company-token-test");
         $ninja->setUrl("http://ninja.test:8000");
 
@@ -27,10 +28,6 @@ class BootTest extends TestCase
 
         $this->assertTrue(is_array($clients));
         
-// print_r($clients);
-        // die(var_dump($clients));
-
-        // die($clients);
     } 
 
 

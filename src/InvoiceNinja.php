@@ -14,7 +14,7 @@ namespace InvoiceNinja\Sdk;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use InvoiceNinja\Sdk\Endpoint\Clients;
+use InvoiceNinja\Sdk\Endpoints\Clients;
 
 class InvoiceNinja
 {

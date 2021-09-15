@@ -9,7 +9,7 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace InvoiceNinja\Sdk\Endpoint;
+namespace InvoiceNinja\Sdk\Endpoints;
 
 use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;

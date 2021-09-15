@@ -119,7 +119,7 @@ class InvoiceNinja
 			if($response->getStatusCode() == 200)	
 				return json_decode($response->getBody()->getContents(),true);
 
-
+			//get appropriate response for status and return
 
 		}
 		catch(RequestException $e) {

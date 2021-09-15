@@ -14,6 +14,7 @@ namespace InvoiceNinja\Sdk;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use InvoiceNinja\Sdk\Endpoint\Clients;
 
 class InvoiceNinja
 {
@@ -24,8 +25,9 @@ class InvoiceNinja
 
 	private array $headers = [];
 
-	private Client $client;
+	private Client $httpClient;
 
+	public Clients $clients;
     /**
      * @param string $token 
      * @return void 
@@ -33,8 +35,16 @@ class InvoiceNinja
     public function __construct(string $token)
     {
     	$this->token = $token;
+
+    	$this->initialize();
     }
 
+    private function initialize()
+    {
+    	$this->clients = new Clients($this);
+
+    	return $this;
+    }
     /**
      * @param string $url 
      * @return $this 
@@ -94,7 +104,7 @@ class InvoiceNinja
 	/** @return Client  */
 	private function httpClient()
 	{
-		$this->client =  new \GuzzleHttp\Client(['headers' => $this->buildHeaders()]);
+		$this->httpClient = new \GuzzleHttp\Client(['headers' => $this->buildHeaders()]);
 
 		return $this;
 	}
@@ -114,7 +124,7 @@ class InvoiceNinja
 
 		try{
 		
-			$response =  $this->client->request($method, $url, $payload);
+			$response =  $this->httpClient->request($method, $url, $payload);
 		
 			if($response->getStatusCode() == 200)	
 				return json_decode($response->getBody()->getContents(),true);

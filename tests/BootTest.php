@@ -23,8 +23,7 @@ class BootTest extends TestCase
         $ninja = new InvoiceNinja("company-token-test");
         $ninja->setUrl("http://ninja.test:8000");
 
-        $client = new Client($ninja);
-        $clients = $client->all(['balance' => '0:gt']);
+        $clients = $ninja->clients->all(['balance' => '0:gt']);
 
         $this->assertTrue(is_array($clients));
         

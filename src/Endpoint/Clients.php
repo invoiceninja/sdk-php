@@ -9,12 +9,12 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace InvoiceNinja\Sdk;
+namespace InvoiceNinja\Sdk\Endpoint;
 
 use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
-class Client
+class Clients
 {
 
     protected InvoiceNinja $ninja;

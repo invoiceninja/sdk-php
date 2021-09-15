@@ -10,7 +10,7 @@
         }
     ],
     "autoload": {
-        "psr-4": {"InvoiceNinja\\": "src/"}
+        "psr-4": {"InvoiceNinja\\Sdk\\": "src/"}
     },
     "require": {
         "php": "^7.4|^8.0",
@@ -21,7 +21,15 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "InvoiceNinja\\Sdk\\Tests\\": "tests"
         }
-    }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
 }

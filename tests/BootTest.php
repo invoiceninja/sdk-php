@@ -2,6 +2,7 @@
 
 namespace InvoiceNinja\Sdk\Tests;
 
+use InvoiceNinja\Sdk\Client;
 use InvoiceNinja\Sdk\InvoiceNinja;
 use PHPUnit\Framework\TestCase;
 
@@ -16,5 +17,23 @@ class BootTest extends TestCase
         $this->assertInstanceOf(InvoiceNinja::class, $ninja);
 
     }
+
+    public function testClients()
+    {
+        $ninja = new InvoiceNinja("company-token-test");
+        $ninja->setUrl("http://ninja.test:8000");
+
+        $client = new Client($ninja);
+        $clients = $client->all(['balance' => '0:gt']);
+
+        $this->assertTrue(is_array($clients));
+        
+// print_r($clients);
+        // die(var_dump($clients));
+
+        // die($clients);
+    } 
+
+
 
 }

@@ -24,6 +24,8 @@ class InvoiceNinja
 
 	private array $headers = [];
 
+	private Client $client;
+
     /**
      * @param string $token 
      * @return void 
@@ -92,7 +94,9 @@ class InvoiceNinja
 	/** @return Client  */
 	private function httpClient()
 	{
-		return new \GuzzleHttp\Client(['headers' => $this->buildHeaders()]);
+		$this->client =  new \GuzzleHttp\Client(['headers' => $this->buildHeaders()]);
+
+		return $this;
 	}
 
 	/**
@@ -104,13 +108,22 @@ class InvoiceNinja
 	 */
 	public function run(string $method, string $uri, array $payload)
 	{
-		$url = $this->getUrl . $uri;
+		$this->httpClient();
+
+		$url = $this->getUrl() . $uri;
 
 		try{
-			$this->httpClient()->request($method, $url, $payload);
+		
+			$response =  $this->client->request($method, $url, $payload);
+		
+			if($response->getStatusCode() == 200)	
+				return json_decode($response->getBody()->getContents(),true);
+
+
+
 		}
 		catch(RequestException $e) {
-
+			// return $e->getMessage();
 		}
 	}
 

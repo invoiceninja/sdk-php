@@ -37,7 +37,10 @@ class PaymentsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $payments = $ninja->payments->get('VolejRejNm');
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $payment = $ninja->payments->create(['client_id' => $client['data']['id'], 'amount' => 10]);
+
+        $payments = $ninja->payments->get($payment['data']['id']);
 
         $this->assertTrue(is_array($payments));
         
@@ -50,7 +53,10 @@ class PaymentsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $payments = $ninja->payments->update('VolejRejNm', ['transaction_reference' => 'ref']);
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $payment = $ninja->payments->create(['client_id' => $client['data']['id'], 'amount' => 10]);
+
+        $payments = $ninja->payments->update($payment['data']['id'], ['transaction_reference' => 'ref']);
         
         $this->assertTrue(is_array($payments));
         

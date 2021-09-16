@@ -25,6 +25,10 @@ class InvoicesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+
         $invoices = $ninja->invoices->all();
 
         $this->assertTrue(is_array($invoices));
@@ -37,7 +41,11 @@ class InvoicesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $invoices = $ninja->invoices->get('4w9aAOdvMR');
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+
+        $invoices = $ninja->invoices->get($invoice['data']['id']);
 
         $this->assertTrue(is_array($invoices));
         
@@ -50,7 +58,11 @@ class InvoicesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $invoices = $ninja->invoices->update('4w9aAOdvMR', ['discount' => '10']);
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+
+        $invoices = $ninja->invoices->update($invoice['data']['id'], ['discount' => '10']);
         
         $this->assertTrue(is_array($invoices));
         

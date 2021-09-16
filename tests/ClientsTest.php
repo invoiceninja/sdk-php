@@ -21,10 +21,13 @@ class ClientsTest extends TestCase
 
     public function testClients()
     {
-        
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
+        $clients = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        
+        $this->assertTrue(is_array($clients));
+    
         $clients = $ninja->clients->all(['balance' => '0:gt']);
 
         $this->assertTrue(is_array($clients));
@@ -33,11 +36,18 @@ class ClientsTest extends TestCase
 
     public function testClientGet()
     {
-        
+    
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $clients = $ninja->clients->get('7LDdwRb1YK');
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        
+        $this->assertTrue(is_array($client));
+
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
+        $clients = $ninja->clients->get($client['data']['id']);
 
         $this->assertTrue(is_array($clients));
         
@@ -50,7 +60,9 @@ class ClientsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $clients = $ninja->clients->update('7LDdwRb1YK', ['name' => 'A new client name updated']);
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $clients = $ninja->clients->update($client['data']['id'], ['name' => 'A new client name updated']);
         
         $this->assertTrue(is_array($clients));
         

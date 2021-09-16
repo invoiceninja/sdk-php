@@ -37,7 +37,10 @@ class QuotesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $quotes = $ninja->quotes->get('gl9avmeG1v');
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $quote = $ninja->quotes->create(['client_id' => $client['data']['id']]);
+
+        $quotes = $ninja->quotes->get($quote['data']['id']);
 
         $this->assertTrue(is_array($quotes));
         
@@ -50,7 +53,11 @@ class QuotesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $quotes = $ninja->quotes->update('gl9avmeG1v', ['discount' => '10']);
+
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $quote = $ninja->quotes->create(['client_id' => $client['data']['id']]);
+
+        $quotes = $ninja->quotes->update($quote['data']['id'], ['discount' => '10']);
         
         $this->assertTrue(is_array($quotes));
         
@@ -62,8 +69,9 @@ class QuotesTest extends TestCase
         
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
-        $quotes = $ninja->quotes->create(['client_id' => '7LDdwRb1YK']);
+        $quotes = $ninja->quotes->create(['client_id' => $client['data']['id']]);
         
         $this->assertTrue(is_array($quotes));
         

@@ -14,70 +14,70 @@ namespace InvoiceNinja\Sdk\Tests;
 use InvoiceNinja\Sdk\InvoiceNinja;
 use PHPUnit\Framework\TestCase;
 
-class ClientsTest extends TestCase
+class VendorsTest extends TestCase
 {
     protected string $token = "company-token-test";
     protected string $url = "https://ninja.test";
 
-    public function testClients()
+    public function testVendors()
     {
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $clients = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $vendors = $ninja->vendors->create(['name' => 'Brand spanking new vendor']);
         
-        $this->assertTrue(is_array($clients));
+        $this->assertTrue(is_array($vendors));
     
-        $clients = $ninja->clients->all(['balance' => '0:gt']);
+        $vendors = $ninja->vendors->all(['balance' => '0:gt']);
 
-        $this->assertTrue(is_array($clients));
+        $this->assertTrue(is_array($vendors));
         
     } 
 
-    public function testClientGet()
+    public function testVendorGet()
     {
     
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $vendor = $ninja->vendors->create(['name' => 'Brand spanking new vendor']);
         
-        $this->assertTrue(is_array($client));
+        $this->assertTrue(is_array($vendor));
 
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $clients = $ninja->clients->get($client['data']['id']);
+        $vendors = $ninja->vendors->get($vendor['data']['id']);
 
-        $this->assertTrue(is_array($clients));
+        $this->assertTrue(is_array($vendors));
         
     } 
 
 
-    public function testClientPut()
+    public function testVendorPut()
     {
         
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $vendor = $ninja->vendors->create(['name' => 'Brand spanking new vendor']);
 
-        $clients = $ninja->clients->update($client['data']['id'], ['name' => 'A new client name updated']);
+        $vendors = $ninja->vendors->update($vendor['data']['id'], ['name' => 'A new vendor name updated']);
         
-        $this->assertTrue(is_array($clients));
+        $this->assertTrue(is_array($vendors));
         
     } 
 
 
-    public function testClientPost()
+    public function testVendorPost()
     {
         
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $clients = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $vendors = $ninja->vendors->create(['name' => 'Brand spanking new vendor']);
         
-        $this->assertTrue(is_array($clients));
+        $this->assertTrue(is_array($vendors));
         
     } 
 }

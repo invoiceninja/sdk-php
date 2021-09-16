@@ -15,12 +15,19 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use InvoiceNinja\Sdk\Endpoints\Clients;
+use InvoiceNinja\Sdk\Endpoints\Companies;
+use InvoiceNinja\Sdk\Endpoints\Credits;
+use InvoiceNinja\Sdk\Endpoints\Expenses;
 use InvoiceNinja\Sdk\Endpoints\Invoices;
 use InvoiceNinja\Sdk\Endpoints\Payments;
 use InvoiceNinja\Sdk\Endpoints\Products;
+use InvoiceNinja\Sdk\Endpoints\Projects;
 use InvoiceNinja\Sdk\Endpoints\Quotes;
+use InvoiceNinja\Sdk\Endpoints\RecurringInvoices;
 use InvoiceNinja\Sdk\Endpoints\Statics;
+use InvoiceNinja\Sdk\Endpoints\Tasks;
 use InvoiceNinja\Sdk\Endpoints\TaxRates;
+use InvoiceNinja\Sdk\Endpoints\Vendors;
 use InvoiceNinja\Sdk\Exceptions\ApiException;
 
 class InvoiceNinja
@@ -48,6 +55,20 @@ class InvoiceNinja
 
 	public Statics $statics;
 
+	public Expenses $expense;
+
+	public RecurringInvoices $recurring_invoices;
+
+	public Credits $credits;
+
+	public Projects $projects;
+
+	public Tasks $tasks;
+
+	public Vendors $vendors;
+
+	public Companies $companies;
+
     /**
      * @param string $token 
      * @return void 
@@ -68,7 +89,14 @@ class InvoiceNinja
     	$this->payments = new Payments($this);
     	$this->tax_rates = new TaxRates($this);
     	$this->statics = new Statics($this);
-    	
+    	$this->expenses = new Expenses($this);
+    	$this->recurring_invoices = new RecurringInvoices($this);
+    	$this->credits = new Credits($this);
+    	$this->projects = new Projects($this);
+    	$this->tasks = new Tasks($this);
+    	$this->vendors = new Vendors($this);
+    	$this->companies = new Companies($this);
+
     	return $this;
     }
     /**
@@ -81,6 +109,18 @@ class InvoiceNinja
 
     	return $this;
     }
+
+    public function setToken($token)
+    {
+    	$this->token = $token;
+
+    	return $this;
+    }
+
+	public function getToken()
+	{
+		return $this->token;
+	}
 
     /** @return string  */
     private function getUrl() :string
@@ -120,7 +160,7 @@ class InvoiceNinja
     private function buildHeaders() :array
     {
 		$headers = [
-		    'X-API-TOKEN' 	=> $this->token,        
+		    'X-API-TOKEN' 	=> $this->getToken(),        
 		    'X-Requested-With' => 'XMLHttpRequest',
 		];
 
@@ -130,7 +170,10 @@ class InvoiceNinja
 	/** @return Client  */
 	private function httpClient()
 	{
-		$this->httpClient = new \GuzzleHttp\Client(['headers' => $this->buildHeaders()]);
+		$this->httpClient = new \GuzzleHttp\Client([
+			'verify' => false,
+			'headers' => $this->buildHeaders()
+		]);
 
 		return $this;
 	}

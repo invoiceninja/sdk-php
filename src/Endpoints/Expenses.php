@@ -1,10 +1,10 @@
 <?php
 /**
- * Product Ninja (https://invoiceninja.com).
+ * Invoice Ninja (https://invoiceninja.com).
  *
  * @link https://github.com/invoiceninja/sdk-php source repository
  *
- * @copyright Copyright (c) 2021. Product Ninja LLC (https://invoiceninja.com)
+ * @copyright Copyright (c) 2021. Invoice Ninja LLC (https://invoiceninja.com)
  *
  * @license https://opensource.org/licenses/MIT
  */
@@ -14,12 +14,12 @@ namespace InvoiceNinja\Sdk\Endpoints;
 use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
-class Products extends BaseEntity
+class Expenses extends BaseEntity
 {
 
     protected InvoiceNinja $ninja;
 
-    protected string $uri = "/api/v1/products";
+    protected string $uri = "/api/v1/expenses";
 
     public function __construct(InvoiceNinja $ninja)
     {

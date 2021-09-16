@@ -20,10 +20,19 @@ $invoices = $ninja->invoices->all();
 ### Supports
 
 - Clients
-- Invoices/Quotes
+- Invoices
+- Quotes
 - Products
 - Payments
 - TaxRates
+- Statics
+- Expenses
+- Recurring Invoices
+- Credits
+- Projects
+- Tasks
+- Vendors
+- Companies
 
 ### Retrieving Models
 

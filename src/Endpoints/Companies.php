@@ -14,29 +14,16 @@ namespace InvoiceNinja\Sdk\Endpoints;
 use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
-class BaseEntity
+class Companies 
 {
 
-    public function bulk(string $action, array $ids)
-    {
-        $query['form_params'] = ["action" => $action, "ids" => $ids];
+    protected InvoiceNinja $ninja;
 
-        return $this->ninja->send("POST", "{$this->uri}/bulk", $query);
-    }
+    protected string $uri = "/api/v1/companies";
 
-    public function archive(array $entity_array)
+    public function __construct(InvoiceNinja $ninja)
     {
-        return $this->bulk("archive", $entity_array);
-    }
-
-    public function delete(array $entity_array)
-    {
-        return $this->bulk("delete", $entity_array);
-    }
-
-    public function restore(array $entity_array)
-    {
-        return $this->bulk("restore", $entity_array);
+        $this->ninja = $ninja;
     }
 
     public function all(array $search = [])
@@ -66,6 +53,5 @@ class BaseEntity
 
         return $this->ninja->send("POST", "{$this->uri}", $query);
     }
-
 }
 

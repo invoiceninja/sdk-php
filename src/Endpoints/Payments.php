@@ -26,37 +26,5 @@ class Payments extends BaseEntity
         $this->ninja = $ninja;
     }
 
-    /**
-     * @param array $search 
-     * @return void 
-     * @throws GuzzleException 
-     */
-    public function all(array $search = [])
-    {
-        $query = ['query' => $search];
-
-        return $this->ninja->send("GET", "{$this->uri}", $query);
-    }
-
-    public function get(string $payment_id, array $search = [])
-    {
-        $query = ['query' => $search];
-
-        return $this->ninja->send("GET", "{$this->uri}/{$payment_id}", $query);
-    }
-
-    public function update(string $payment_id, array $payment)
-    {
-        $query = ['form_params' => $payment];
-
-        return $this->ninja->send("PUT", "{$this->uri}/{$payment_id}", $query);
-    }
-
-    public function create(array $payment, array $includes = [])
-    {
-        $query = ['form_params' => $payment, 'query' => $includes];
-
-        return $this->ninja->send("POST", "{$this->uri}", $query);
-    }
 }
 

@@ -26,37 +26,5 @@ class Quotes extends BaseEntity
         $this->ninja = $ninja;
     }
 
-    /**
-     * @param array $search 
-     * @return void 
-     * @throws GuzzleException 
-     */
-    public function all(array $search = [])
-    {
-        $query = ['query' => $search];
-
-        return $this->ninja->send("GET", "{$this->uri}", $query);
-    }
-
-    public function get(string $quote_id, array $search = [])
-    {
-        $query = ['query' => $search];
-
-        return $this->ninja->send("GET", "{$this->uri}/{$quote_id}", $query);
-    }
-
-    public function update(string $quote_id, array $quote)
-    {
-        $query = ['form_params' => $quote];
-
-        return $this->ninja->send("PUT", "{$this->uri}/{$quote_id}", $query);
-    }
-
-    public function create(array $entity, array $includes = [])
-    {
-        $query = ['form_params' => $entity, 'query' => $includes];
-
-        return $this->ninja->send("POST", "{$this->uri}", $query);
-    }
 }
 

@@ -14,7 +14,7 @@ namespace InvoiceNinja\Sdk\Tests;
 use InvoiceNinja\Sdk\InvoiceNinja;
 use PHPUnit\Framework\TestCase;
 
-class InvoicesTest extends TestCase
+class RecurringInvoicesTest extends TestCase
 {
     protected string $token = "company-token-test";
     protected string $url = "https://ninja.test";
@@ -27,9 +27,9 @@ class InvoicesTest extends TestCase
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+        $invoice = $ninja->recurring_invoices->create(['frequency_id'=>1,'client_id' => $client['data']['id']]);
 
-        $invoices = $ninja->invoices->all();
+        $invoices = $ninja->recurring_invoices->all();
 
         $this->assertTrue(is_array($invoices));
         
@@ -43,9 +43,9 @@ class InvoicesTest extends TestCase
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+        $invoice = $ninja->recurring_invoices->create(['frequency_id'=>1,'client_id' => $client['data']['id']]);
 
-        $invoices = $ninja->invoices->get($invoice['data']['id']);
+        $invoices = $ninja->recurring_invoices->get($invoice['data']['id']);
 
         $this->assertTrue(is_array($invoices));
         
@@ -60,9 +60,9 @@ class InvoicesTest extends TestCase
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+        $invoice = $ninja->recurring_invoices->create(['frequency_id'=>1,'client_id' => $client['data']['id']]);
 
-        $invoices = $ninja->invoices->update($invoice['data']['id'], ['discount' => '10']);
+        $invoices = $ninja->recurring_invoices->update($invoice['data']['id'], ['discount' => '10']);
         
         $this->assertTrue(is_array($invoices));
         
@@ -75,7 +75,8 @@ class InvoicesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $invoices = $ninja->invoices->create(['client_id' => '7LDdwRb1YK']);
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $invoices = $ninja->recurring_invoices->create(['frequency_id'=>1,'client_id' => $client['data']['id']]);
         
         $this->assertTrue(is_array($invoices));
         

@@ -26,37 +26,5 @@ class Invoices extends BaseEntity
         $this->ninja = $ninja;
     }
 
-    /**
-     * @param array $search 
-     * @return void 
-     * @throws GuzzleException 
-     */
-    public function all(array $search = [])
-    {
-        $query = ['query' => $search];
-
-        return $this->ninja->send("GET", "{$this->uri}", $query);
-    }
-
-    public function get(string $invoice_id, array $search = [])
-    {
-        $query = ['query' => $search];
-
-        return $this->ninja->send("GET", "{$this->uri}/{$invoice_id}", $query);
-    }
-
-    public function update(string $invoice_id, array $invoices)
-    {
-        $query = ['form_params' => $invoices];
-
-        return $this->ninja->send("PUT", "{$this->uri}/{$invoice_id}", $query);
-    }
-
-    public function create(array $invoices, array $includes = [])
-    {
-        $query = ['form_params' => $invoices, 'query' => $includes];
-
-        return $this->ninja->send("POST", "{$this->uri}", $query);
-    }
 }
 

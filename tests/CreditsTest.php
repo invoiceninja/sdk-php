@@ -14,12 +14,12 @@ namespace InvoiceNinja\Sdk\Tests;
 use InvoiceNinja\Sdk\InvoiceNinja;
 use PHPUnit\Framework\TestCase;
 
-class InvoicesTest extends TestCase
+class CreditsTest extends TestCase
 {
     protected string $token = "company-token-test";
     protected string $url = "https://ninja.test";
 
-    public function testInvoices()
+    public function testCredits()
     {
         
         $ninja = new InvoiceNinja($this->token);
@@ -27,15 +27,15 @@ class InvoicesTest extends TestCase
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+        $credit = $ninja->credits->create(['client_id' => $client['data']['id']]);
 
-        $invoices = $ninja->invoices->all();
+        $credits = $ninja->credits->all();
 
-        $this->assertTrue(is_array($invoices));
+        $this->assertTrue(is_array($credits));
         
     } 
 
-    public function testInvoiceGet()
+    public function testCreditGet()
     {
         
         $ninja = new InvoiceNinja($this->token);
@@ -43,16 +43,16 @@ class InvoicesTest extends TestCase
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+        $credit = $ninja->credits->create(['client_id' => $client['data']['id']]);
 
-        $invoices = $ninja->invoices->get($invoice['data']['id']);
+        $credits = $ninja->credits->get($credit['data']['id']);
 
-        $this->assertTrue(is_array($invoices));
+        $this->assertTrue(is_array($credits));
         
     } 
 
 
-    public function testInvoicePut()
+    public function testCreditPut()
     {
         
         $ninja = new InvoiceNinja($this->token);
@@ -60,24 +60,24 @@ class InvoicesTest extends TestCase
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+        $credit = $ninja->credits->create(['client_id' => $client['data']['id']]);
 
-        $invoices = $ninja->invoices->update($invoice['data']['id'], ['discount' => '10']);
+        $credits = $ninja->credits->update($credit['data']['id'], ['discount' => '10']);
         
-        $this->assertTrue(is_array($invoices));
+        $this->assertTrue(is_array($credits));
         
     } 
 
 
-    public function testInvoicePost()
+    public function testCreditPost()
     {
         
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $invoices = $ninja->invoices->create(['client_id' => '7LDdwRb1YK']);
+        $credits = $ninja->credits->create(['client_id' => '7LDdwRb1YK']);
         
-        $this->assertTrue(is_array($invoices));
+        $this->assertTrue(is_array($credits));
         
     } 
 }

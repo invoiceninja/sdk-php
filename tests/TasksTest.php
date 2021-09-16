@@ -14,70 +14,64 @@ namespace InvoiceNinja\Sdk\Tests;
 use InvoiceNinja\Sdk\InvoiceNinja;
 use PHPUnit\Framework\TestCase;
 
-class InvoicesTest extends TestCase
+class TasksTest extends TestCase
 {
     protected string $token = "company-token-test";
     protected string $url = "https://ninja.test";
 
-    public function testInvoices()
+    public function testTasks()
+    {
+        
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
+        $taks = $ninja->tasks->all();
+
+        $this->assertTrue(is_array($taks));
+        
+    } 
+
+    public function testTaskGet()
     {
         
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $task = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);
 
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
+        $taks = $ninja->tasks->get($task['data']['id']);
 
-        $invoices = $ninja->invoices->all();
-
-        $this->assertTrue(is_array($invoices));
+        $this->assertTrue(is_array($taks));
         
     } 
 
-    public function testInvoiceGet()
+
+    public function testTaskPut()
     {
         
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+        $task = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);
 
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
-
-        $invoices = $ninja->invoices->get($invoice['data']['id']);
-
-        $this->assertTrue(is_array($invoices));
+        $taks = $ninja->tasks->update($task['data']['id'], ['name' => 'Project 2']);
+        
+        $this->assertTrue(is_array($taks));
         
     } 
 
 
-    public function testInvoicePut()
+    public function testTaskPost()
     {
         
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
-
-        $invoice = $ninja->invoices->create(['client_id' => $client['data']['id']]);
-
-        $invoices = $ninja->invoices->update($invoice['data']['id'], ['discount' => '10']);
-        
-        $this->assertTrue(is_array($invoices));
-        
-    } 
-
-
-    public function testInvoicePost()
-    {
-        
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
-
-        $invoices = $ninja->invoices->create(['client_id' => '7LDdwRb1YK']);
-        
-        $this->assertTrue(is_array($invoices));
+        $taks = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);        
+        $this->assertTrue(is_array($taks));
         
     } 
 }

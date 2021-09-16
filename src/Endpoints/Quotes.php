@@ -14,10 +14,12 @@ namespace InvoiceNinja\Sdk\Endpoints;
 use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
-class Quotes
+class Quotes extends BaseEntity
 {
 
     protected InvoiceNinja $ninja;
+
+    protected string $uri = "/api/v1/quotes";
 
     public function __construct(InvoiceNinja $ninja)
     {
@@ -33,28 +35,28 @@ class Quotes
     {
         $query = ['query' => $search];
 
-        return $this->ninja->send("GET", "/api/v1/quotes", $query);
+        return $this->ninja->send("GET", "{$this->uri}", $query);
     }
 
     public function get(string $quote_id, array $search = [])
     {
         $query = ['query' => $search];
 
-        return $this->ninja->send("GET", "/api/v1/quotes/{$quote_id}", $query);
+        return $this->ninja->send("GET", "{$this->uri}/{$quote_id}", $query);
     }
 
     public function update(string $quote_id, array $quote)
     {
         $query = ['form_params' => $quote];
 
-        return $this->ninja->send("PUT", "/api/v1/quotes/{$quote_id}", $query);
+        return $this->ninja->send("PUT", "{$this->uri}/{$quote_id}", $query);
     }
 
     public function create(array $entity, array $includes = [])
     {
         $query = ['form_params' => $entity, 'query' => $includes];
 
-        return $this->ninja->send("POST", "/api/v1/quotes", $query);
+        return $this->ninja->send("POST", "{$this->uri}", $query);
     }
 }
 

@@ -14,10 +14,12 @@ namespace InvoiceNinja\Sdk\Endpoints;
 use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
-class TaxRates
+class TaxRates extends BaseEntity
 {
 
     protected InvoiceNinja $ninja;
+
+    protected string $uri = "/api/v1/tax_rates";
 
     public function __construct(InvoiceNinja $ninja)
     {
@@ -33,28 +35,28 @@ class TaxRates
     {
         $query = ['query' => $search];
 
-        return $this->ninja->send("GET", "/api/v1/tax_rates", $query);
+        return $this->ninja->send("GET", "{$this->uri}", $query);
     }
 
     public function get(string $tax_rate_id, array $search = [])
     {
         $query = ['query' => $search];
 
-        return $this->ninja->send("GET", "/api/v1/tax_rates/{$tax_rate_id}", $query);
+        return $this->ninja->send("GET", "{$this->uri}/{$tax_rate_id}", $query);
     }
 
     public function update(string $tax_rate_id, array $tax_rate)
     {
         $query = ['form_params' => $tax_rate];
 
-        return $this->ninja->send("PUT", "/api/v1/tax_rates/{$tax_rate_id}", $query);
+        return $this->ninja->send("PUT", "{$this->uri}/{$tax_rate_id}", $query);
     }
 
     public function create(array $tax_rate, array $includes = [])
     {
         $query = ['form_params' => $tax_rate, 'query' => $includes];
 
-        return $this->ninja->send("POST", "/api/v1/tax_rates", $query);
+        return $this->ninja->send("POST", "{$this->uri}", $query);
     }
 }
 

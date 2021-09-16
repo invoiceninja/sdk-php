@@ -39,11 +39,13 @@ Query parameters can be chained together to form complex queries. The current su
 **per_page**: The number of clients per page you want returned  
 **page**: The page number  
 **include**: A comma separated list of relations to include ie. contacts,documents,gateway_tokens  
-**balance**: A query to return clients with a balance using an operator and value  
+**balance**: A query to return clients with a balance using an operator and value
  - ie ?balance=lt:10 Returns clients with a balance less than 10  
  - available operators lt, lte, gt, gte, eq  
+
 **between_balance**: Returns clients with a balance between two values  
  - ie ?between_balance=10:20 - Returns clients with a balance between 10 and 20  
+
 **email**: Returns clients with a contacts.email field equal to an email  
 **id_number**: Search by id_number  
 **number**: Search by number  

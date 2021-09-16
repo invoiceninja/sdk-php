@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 class ClientsTest extends TestCase
 {
     protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
+    protected string $url = "https://ninja.test";
 
     public function testClients()
     {

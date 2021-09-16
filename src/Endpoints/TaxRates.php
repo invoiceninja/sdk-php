@@ -26,37 +26,5 @@ class TaxRates extends BaseEntity
         $this->ninja = $ninja;
     }
 
-    /**
-     * @param array $search 
-     * @return void 
-     * @throws GuzzleException 
-     */
-    public function all(array $search = [])
-    {
-        $query = ['query' => $search];
-
-        return $this->ninja->send("GET", "{$this->uri}", $query);
-    }
-
-    public function get(string $tax_rate_id, array $search = [])
-    {
-        $query = ['query' => $search];
-
-        return $this->ninja->send("GET", "{$this->uri}/{$tax_rate_id}", $query);
-    }
-
-    public function update(string $tax_rate_id, array $tax_rate)
-    {
-        $query = ['form_params' => $tax_rate];
-
-        return $this->ninja->send("PUT", "{$this->uri}/{$tax_rate_id}", $query);
-    }
-
-    public function create(array $tax_rate, array $includes = [])
-    {
-        $query = ['form_params' => $tax_rate, 'query' => $includes];
-
-        return $this->ninja->send("POST", "{$this->uri}", $query);
-    }
 }
 

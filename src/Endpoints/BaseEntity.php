@@ -39,5 +39,33 @@ class BaseEntity
         return $this->bulk("restore", $entity_array);
     }
 
+    public function all(array $search = [])
+    {
+        $query = ['query' => $search];
+
+        return $this->ninja->send("GET", "{$this->uri}", $query);
+    }
+
+    public function get(string $entity_id, array $search = [])
+    {
+        $query = ['query' => $search];
+
+        return $this->ninja->send("GET", "{$this->uri}/{$entity_id}", $query);
+    }
+
+    public function update(string $entity_id, array $entity)
+    {
+        $query = ['form_params' => $entity];
+
+        return $this->ninja->send("PUT", "{$this->uri}/{$entity_id}", $query);
+    }
+
+    public function create(array $entity, array $includes = [])
+    {
+        $query = ['form_params' => $entity, 'query' => $includes];
+
+        return $this->ninja->send("POST", "{$this->uri}", $query);
+    }
+
 }
 

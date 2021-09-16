@@ -19,6 +19,13 @@ class TaxRatesTest extends TestCase
     protected string $token = "company-token-test";
     protected string $url = "http://ninja.test:8000";
 
+    public $faker;
+
+    protected function setUp(): void
+    {
+        $this->faker = \Faker\Factory::create();    
+    }
+
     public function testProducts()
     {
         
@@ -37,7 +44,9 @@ class TaxRatesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $tax_rates = $ninja->tax_rates->get('Opnel5aKBz');
+        $tax_rate = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->word()]);
+
+        $tax_rates = $ninja->tax_rates->get($tax_rate['data']['id']);
 
         $this->assertTrue(is_array($tax_rates));
         
@@ -50,7 +59,9 @@ class TaxRatesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $tax_rates = $ninja->tax_rates->update('Opnel5aKBz', ['rate' => 10, 'name' => 'GST']);
+        $tax_rate = $ninja->tax_rates->create(['rate' => 10, 'name' => 'GSTa']);
+
+        $tax_rates = $ninja->tax_rates->update($tax_rate['data']['id'], ['rate' => 10, 'name' => $this->faker->word()]);
         
         $this->assertTrue(is_array($tax_rates));
         
@@ -63,7 +74,7 @@ class TaxRatesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $tax_rates = $ninja->tax_rates->create(['rate' => 10, 'name' => 'GSTX']);
+        $tax_rates = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->word()]);
         
         $this->assertTrue(is_array($tax_rates));
         

@@ -37,7 +37,9 @@ class ProductsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $products = $ninja->products->get('gl9avmeG1v');
+        $product = $ninja->products->create(['product_key' => 'that']);
+
+        $products = $ninja->products->get($product['data']['id']);
 
         $this->assertTrue(is_array($products));
         
@@ -50,7 +52,9 @@ class ProductsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $products = $ninja->products->update('gl9avmeG1v', ['product_key' => 'this']);
+        $product = $ninja->products->create(['product_key' => 'thatx']);
+
+        $products = $ninja->products->update($product['data']['id'], ['product_key' => 'this']);
         
         $this->assertTrue(is_array($products));
         

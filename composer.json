@@ -17,6 +17,7 @@
         "guzzlehttp/guzzle": "^7.3"
     },
     "require-dev": {
+        "fakerphp/faker": "^1.16",
         "phpunit/phpunit": "^9.5"
     },
     "autoload-dev": {

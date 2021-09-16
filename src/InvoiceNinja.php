@@ -15,6 +15,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use InvoiceNinja\Sdk\Endpoints\Clients;
+use InvoiceNinja\Sdk\Endpoints\Invoices;
+use InvoiceNinja\Sdk\Endpoints\Products;
+use InvoiceNinja\Sdk\Endpoints\Quotes;
+use InvoiceNinja\Sdk\Exceptions\ApiException;
 
 class InvoiceNinja
 {
@@ -28,6 +32,13 @@ class InvoiceNinja
 	private Client $httpClient;
 
 	public Clients $clients;
+
+	public Invoices $invoices;
+
+	public Products $products;
+
+	public Quotes $quotes;
+	
     /**
      * @param string $token 
      * @return void 
@@ -42,6 +53,9 @@ class InvoiceNinja
     private function initialize()
     {
     	$this->clients = new Clients($this);
+    	$this->invoices = new Invoices($this);
+    	$this->products = new Products($this);
+    	$this->quotes = new Quotes($this);
 
     	return $this;
     }
@@ -116,7 +130,7 @@ class InvoiceNinja
 	 * @return void 
 	 * @throws GuzzleException 
 	 */
-	public function run(string $method, string $uri, array $payload)
+	public function send(string $method, string $uri, array $payload)
 	{
 		$this->httpClient();
 
@@ -132,9 +146,18 @@ class InvoiceNinja
 			//get appropriate response for status and return
 
 		}
-		catch(RequestException $e) {
-			// return $e->getMessage();
+		catch(GuzzleException $e) {
+			
+            if (method_exists($e, 'hasResponse') && method_exists($e, 'getResponse') && $e->hasResponse()) 
+            	throw ApiException::createFromResponse($e->getResponse());
+                
+
+            throw new ApiException($e->getMessage(), $e->getCode());
+
+
 		}
 	}
 
 }
+
+

@@ -14,7 +14,7 @@ namespace InvoiceNinja\Sdk\Endpoints;
 use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
-class Clients
+class Invoices
 {
 
     protected InvoiceNinja $ninja;
@@ -33,28 +33,28 @@ class Clients
     {
         $query = ['query' => $search];
 
-        return $this->ninja->send("GET", "/api/v1/clients", $query);
+        return $this->ninja->send("GET", "/api/v1/invoices", $query);
     }
 
-    public function get(string $client_id, array $search = [])
+    public function get(string $invoice_id, array $search = [])
     {
         $query = ['query' => $search];
 
-        return $this->ninja->send("GET", "/api/v1/clients/{$client_id}", $query);
+        return $this->ninja->send("GET", "/api/v1/invoices/{$invoice_id}", $query);
     }
 
-    public function update(string $client_id, array $client)
+    public function update(string $invoice_id, array $client)
     {
         $query = ['form_params' => $client];
 
-        return $this->ninja->send("PUT", "/api/v1/clients/{$client_id}", $query);
+        return $this->ninja->send("PUT", "/api/v1/invoices/{$invoice_id}", $query);
     }
 
     public function create(array $client, array $includes = [])
     {
         $query = ['form_params' => $client, 'query' => $includes];
 
-        return $this->ninja->send("POST", "/api/v1/clients", $query);
+        return $this->ninja->send("POST", "/api/v1/invoices", $query);
     }
 }
 

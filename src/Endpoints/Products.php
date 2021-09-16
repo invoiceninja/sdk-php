@@ -1,10 +1,10 @@
 <?php
 /**
- * Invoice Ninja (https://invoiceninja.com).
+ * Product Ninja (https://invoiceninja.com).
  *
  * @link https://github.com/invoiceninja/sdk-php source repository
  *
- * @copyright Copyright (c) 2021. Invoice Ninja LLC (https://invoiceninja.com)
+ * @copyright Copyright (c) 2021. Product Ninja LLC (https://invoiceninja.com)
  *
  * @license https://opensource.org/licenses/MIT
  */
@@ -14,7 +14,7 @@ namespace InvoiceNinja\Sdk\Endpoints;
 use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
-class Clients
+class Products
 {
 
     protected InvoiceNinja $ninja;
@@ -33,28 +33,28 @@ class Clients
     {
         $query = ['query' => $search];
 
-        return $this->ninja->send("GET", "/api/v1/clients", $query);
+        return $this->ninja->send("GET", "/api/v1/products", $query);
     }
 
-    public function get(string $client_id, array $search = [])
+    public function get(string $product_id, array $search = [])
     {
         $query = ['query' => $search];
 
-        return $this->ninja->send("GET", "/api/v1/clients/{$client_id}", $query);
+        return $this->ninja->send("GET", "/api/v1/products/{$product_id}", $query);
     }
 
-    public function update(string $client_id, array $client)
+    public function update(string $product_id, array $client)
     {
         $query = ['form_params' => $client];
 
-        return $this->ninja->send("PUT", "/api/v1/clients/{$client_id}", $query);
+        return $this->ninja->send("PUT", "/api/v1/products/{$product_id}", $query);
     }
 
-    public function create(array $client, array $includes = [])
+    public function create(array $product, array $includes = [])
     {
-        $query = ['form_params' => $client, 'query' => $includes];
+        $query = ['form_params' => $product, 'query' => $includes];
 
-        return $this->ninja->send("POST", "/api/v1/clients", $query);
+        return $this->ninja->send("POST", "/api/v1/products", $query);
     }
 }
 

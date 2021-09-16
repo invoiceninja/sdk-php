@@ -1,8 +1,16 @@
 <?php
+/**
+ * Invoice Ninja (https://invoiceninja.com).
+ *
+ * @link https://github.com/invoiceninja/sdk-php source repository
+ *
+ * @copyright Copyright (c) 2021. Invoice Ninja LLC (https://invoiceninja.com)
+ *
+ * @license https://opensource.org/licenses/MIT
+ */
 
 namespace InvoiceNinja\Sdk\Tests;
 
-use InvoiceNinja\Sdk\Client;
 use InvoiceNinja\Sdk\InvoiceNinja;
 use PHPUnit\Framework\TestCase;
 
@@ -17,19 +25,4 @@ class BootTest extends TestCase
         $this->assertInstanceOf(InvoiceNinja::class, $ninja);
 
     }
-
-    public function testClients()
-    {
-        
-        $ninja = new InvoiceNinja("company-token-test");
-        $ninja->setUrl("http://ninja.test:8000");
-
-        $clients = $ninja->clients->all(['balance' => '0:gt']);
-
-        $this->assertTrue(is_array($clients));
-        
-    } 
-
-
-
 }

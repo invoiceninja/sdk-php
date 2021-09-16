@@ -15,6 +15,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use InvoiceNinja\Sdk\Endpoints\Clients;
+use InvoiceNinja\Sdk\Endpoints\Companies;
 use InvoiceNinja\Sdk\Endpoints\Credits;
 use InvoiceNinja\Sdk\Endpoints\Expenses;
 use InvoiceNinja\Sdk\Endpoints\Invoices;
@@ -66,6 +67,8 @@ class InvoiceNinja
 
 	public Vendors $vendors;
 
+	public Companies $companies;
+
     /**
      * @param string $token 
      * @return void 
@@ -92,7 +95,8 @@ class InvoiceNinja
     	$this->projects = new Projects($this);
     	$this->tasks = new Tasks($this);
     	$this->vendors = new Vendors($this);
-    	
+    	$this->companies = new Companies($this);
+
     	return $this;
     }
     /**
@@ -105,6 +109,18 @@ class InvoiceNinja
 
     	return $this;
     }
+
+    public function setToken($token)
+    {
+    	$this->token = $token;
+
+    	return $this;
+    }
+
+	public function getToken()
+	{
+		return $this->token;
+	}
 
     /** @return string  */
     private function getUrl() :string
@@ -144,7 +160,7 @@ class InvoiceNinja
     private function buildHeaders() :array
     {
 		$headers = [
-		    'X-API-TOKEN' 	=> $this->token,        
+		    'X-API-TOKEN' 	=> $this->getToken(),        
 		    'X-Requested-With' => 'XMLHttpRequest',
 		];
 

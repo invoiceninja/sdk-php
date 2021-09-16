@@ -16,6 +16,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use InvoiceNinja\Sdk\Endpoints\Clients;
 use InvoiceNinja\Sdk\Endpoints\Invoices;
+use InvoiceNinja\Sdk\Endpoints\Payments;
 use InvoiceNinja\Sdk\Endpoints\Products;
 use InvoiceNinja\Sdk\Endpoints\Quotes;
 use InvoiceNinja\Sdk\Exceptions\ApiException;
@@ -38,7 +39,9 @@ class InvoiceNinja
 	public Products $products;
 
 	public Quotes $quotes;
-	
+
+	public Payments $payments;
+
     /**
      * @param string $token 
      * @return void 
@@ -56,7 +59,8 @@ class InvoiceNinja
     	$this->invoices = new Invoices($this);
     	$this->products = new Products($this);
     	$this->quotes = new Quotes($this);
-
+    	$this->payments = new Payments($this);
+    	
     	return $this;
     }
     /**

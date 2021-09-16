@@ -20,6 +20,7 @@ use InvoiceNinja\Sdk\Endpoints\Expenses;
 use InvoiceNinja\Sdk\Endpoints\Invoices;
 use InvoiceNinja\Sdk\Endpoints\Payments;
 use InvoiceNinja\Sdk\Endpoints\Products;
+use InvoiceNinja\Sdk\Endpoints\Projects;
 use InvoiceNinja\Sdk\Endpoints\Quotes;
 use InvoiceNinja\Sdk\Endpoints\RecurringInvoices;
 use InvoiceNinja\Sdk\Endpoints\Statics;
@@ -57,6 +58,8 @@ class InvoiceNinja
 
 	public Credits $credits;
 
+	public Projects $projects;
+
     /**
      * @param string $token 
      * @return void 
@@ -80,7 +83,8 @@ class InvoiceNinja
     	$this->expenses = new Expenses($this);
     	$this->recurring_invoices = new RecurringInvoices($this);
     	$this->credits = new Credits($this);
-    	
+    	$this->projects = new Projects($this);
+
     	return $this;
     }
     /**

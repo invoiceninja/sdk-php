@@ -43,16 +43,16 @@ class Invoices
         return $this->ninja->send("GET", "/api/v1/invoices/{$invoice_id}", $query);
     }
 
-    public function update(string $invoice_id, array $invoice)
+    public function update(string $invoice_id, array $invoices)
     {
-        $query = ['form_params' => $invoice];
+        $query = ['form_params' => $invoices];
 
         return $this->ninja->send("PUT", "/api/v1/invoices/{$invoice_id}", $query);
     }
 
-    public function create(array $invoice, array $includes = [])
+    public function create(array $invoices, array $includes = [])
     {
-        $query = ['form_params' => $invoice, 'query' => $includes];
+        $query = ['form_params' => $invoices, 'query' => $includes];
 
         return $this->ninja->send("POST", "/api/v1/invoices", $query);
     }

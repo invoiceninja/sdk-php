@@ -1,22 +1,35 @@
 {
     "name": "invoiceninja/sdk-php",
-    "description": "PHP SDK to create a custom module for Invoice Ninja",
-    "keywords": [
-        "invoice"
-    ],
-    "homepage": "https://www.invoiceninja.com",
+    "description": "The Invoice Ninja v5 PHP SDK",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Hillel Coren",
-            "email": "hillelcoren@gmail.com"
+            "name": "David Bomba",
+            "email": "turbo124@gmail.com"
         }
     ],
     "autoload": {
+        "psr-4": {"InvoiceNinja\\Sdk\\": "src/"}
+    },
+    "require": {
+        "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload-dev": {
         "psr-4": {
-            "InvoiceNinja\\": "src/InvoiceNinja/"
+            "InvoiceNinja\\Sdk\\Tests\\": "tests"
         }
     },
-    "require": {}
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    }
 }

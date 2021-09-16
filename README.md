@@ -1,4 +1,4 @@
-# Invoice Ninja SDK
+# Invoice Ninja SDK v5!
 
 ### Installation
 
@@ -9,18 +9,13 @@ Add the Invoice Ninja SDK
 ### Setup
 ```php
 
-    require __DIR__ . '/vendor/autoload.php';
+use InvoiceNinja\Sdk\InvoiceNinja;
+   
+$ninja = new InvoiceNinja("your_token");
+$invoices = $ninja->invoices->all();
 
-    use InvoiceNinja\Config as NinjaConfig;
-    use InvoiceNinja\Models\Client;
-
-    NinjaConfig::setURL('https://ninja.dev/api/v1');
-    NinjaConfig::setToken('Your Token');
-    NinjaConfig::setPerPage(15);
-    NinjaConfig::setPage(1);
 ```
-- To connect to the hosted version use `https://app.invoiceninja.com/api/v1` as the URL.
-- You can either use the [free hosted trial](https://app.invoiceninja.com/invoice_now?sign_up=true&redirect_to=/settings/api_tokens) or [install the app](https://www.invoiceninja.com/self-host/) to create an API token.
+- To connect to a self hosted version use `->setUrl()` on the $ninja object.
 
 ### Supports
 
@@ -28,100 +23,43 @@ Add the Invoice Ninja SDK
 - Invoices/Quotes
 - Products
 - Payments
-- Tasks
-- Vendors
-- Expenses
 - TaxRates
-- Credits
 
 ### Retrieving Models
 
-Pagination  
-To iterate through more than 1 page of results, increment `NinjaConfig::setPage(1)` value until an empty array of results is returned.  Adjust the number of results per page using the `NinjaConfig::setPerPage(15);` value *(maximum 5000)*.
-
 Retrieve all clients
 ```php
-    $clients = Client::all();
+    $clients = $ninja->clients->all();
 ```
 
 Retrieve a client by its primary key.
 ```php
-    $client = Client::find(1);
+    $client = $ninja->clients->get("CLIENT_HASHED_ID");
 ```
 
 Retrieving an invoice by it's number:
 ```php
-    $invoice = Invoice::findByCustomQuery(["invoice_number" => "0123"]);
+    $client = $ninja->invoices->all(['number' => '0001']);
 ```
 
 ### Inserting & Updating Models
 
 Create a new client
 ```php
-    $client = new Client('test@example.com');
-    $client->save();
+    $client = $ninja->clients->create(['name' => 'A new client']);
+
 ```
 Update an existing client
 ```php
-    $client->vat_number = '123456';
-    $client->save();
+    $client = $ninja->clients->update("CLIENT_HASHED_ID",['name' => 'A client with a updated name']);
+
 ```
 Create an invoice
 ```php
-    $invoice = $client->createInvoice();
-    $invoice->addInvoiceItem('Item', 'Some notes', 10);
-    $invoice->save();
+    $client = $ninja->invoices->create(['client_id' => CLIENT_HASHED_ID]);
+
 ```
 Download an invoice PDF
 ```php
     $pdf = $invoice->download();
-```
-### Deleting Models
-```php
-    $client->archive();
-    $client->delete();
-    $client->restore();
-```
-## Events
-
-Register subscription for new client
-```php
-    Client::subscribeCreate('http://example.com/...');
-```
-Convert posted data to a model
-```php
-    $input = file_get_contents('php://input'); 
-    $client = Client::hydrate($input);
-```
-*Currently supported for clients, invoices, quotes and payments*
-
-## Statics
-
-*Retrieve the static dataset Invoice Ninja uses*
-
-Get all statics
-```php
-    Statics::all();
-```
-Get specific static
-```php
-    Statics::countries();
-```
-List of available statics
-```php
-    Statics::currencies();
-    Statics::sizes();
-    Statics::timezones();
-    Statics::dateFormats();
-    Statics::datetimeFormats();
-    Statics::languages();
-    Statics::paymentTerms();
-    Statics::paymentTypes();
-    Statics::countries();
-    Statics::invoiceDesigns();
-    Statics::invoiceStatus();
-    Statics::frequencies();
-    Statics::gateways();
-    Statics::fonts();
-    Statics::banks();
 ```

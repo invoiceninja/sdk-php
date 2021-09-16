@@ -24,6 +24,7 @@ use InvoiceNinja\Sdk\Endpoints\Projects;
 use InvoiceNinja\Sdk\Endpoints\Quotes;
 use InvoiceNinja\Sdk\Endpoints\RecurringInvoices;
 use InvoiceNinja\Sdk\Endpoints\Statics;
+use InvoiceNinja\Sdk\Endpoints\Tasks;
 use InvoiceNinja\Sdk\Endpoints\TaxRates;
 use InvoiceNinja\Sdk\Exceptions\ApiException;
 
@@ -60,6 +61,8 @@ class InvoiceNinja
 
 	public Projects $projects;
 
+	public Tasks $tasks;
+
     /**
      * @param string $token 
      * @return void 
@@ -84,7 +87,8 @@ class InvoiceNinja
     	$this->recurring_invoices = new RecurringInvoices($this);
     	$this->credits = new Credits($this);
     	$this->projects = new Projects($this);
-
+    	$this->tasks = new Tasks($this);
+    	
     	return $this;
     }
     /**

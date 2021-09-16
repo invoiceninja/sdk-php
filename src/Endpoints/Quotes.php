@@ -43,9 +43,9 @@ class Quotes
         return $this->ninja->send("GET", "/api/v1/quotes/{$quote_id}", $query);
     }
 
-    public function update(string $quote_id, array $client)
+    public function update(string $quote_id, array $quote)
     {
-        $query = ['form_params' => $client];
+        $query = ['form_params' => $quote];
 
         return $this->ninja->send("PUT", "/api/v1/quotes/{$quote_id}", $query);
     }

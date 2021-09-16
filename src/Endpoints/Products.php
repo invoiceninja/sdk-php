@@ -43,9 +43,9 @@ class Products
         return $this->ninja->send("GET", "/api/v1/products/{$product_id}", $query);
     }
 
-    public function update(string $product_id, array $client)
+    public function update(string $product_id, array $product)
     {
-        $query = ['form_params' => $client];
+        $query = ['form_params' => $product];
 
         return $this->ninja->send("PUT", "/api/v1/products/{$product_id}", $query);
     }

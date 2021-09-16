@@ -19,6 +19,7 @@ use InvoiceNinja\Sdk\Endpoints\Invoices;
 use InvoiceNinja\Sdk\Endpoints\Payments;
 use InvoiceNinja\Sdk\Endpoints\Products;
 use InvoiceNinja\Sdk\Endpoints\Quotes;
+use InvoiceNinja\Sdk\Endpoints\TaxRates;
 use InvoiceNinja\Sdk\Exceptions\ApiException;
 
 class InvoiceNinja
@@ -42,6 +43,8 @@ class InvoiceNinja
 
 	public Payments $payments;
 
+	public TaxRates $tax_rates;
+
     /**
      * @param string $token 
      * @return void 
@@ -60,7 +63,8 @@ class InvoiceNinja
     	$this->products = new Products($this);
     	$this->quotes = new Quotes($this);
     	$this->payments = new Payments($this);
-    	
+    	$this->tax_rates = new TaxRates($this);
+
     	return $this;
     }
     /**

@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 class CreditsTest extends TestCase
 {
     protected string $token = "company-token-test";
-    protected string $url = "https://ninja.test";
+    protected string $url = "http://ninja.test:8000";
 
     public function testCredits()
     {
@@ -75,7 +75,7 @@ class CreditsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $credits = $ninja->credits->create(['client_id' => '7LDdwRb1YK']);
+        $credits = $ninja->credits->create(['clint_id' => '7LDdwRb1YK']);
         
         $this->assertTrue(is_array($credits));
         

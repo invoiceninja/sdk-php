@@ -16,16 +16,12 @@ class ApiException extends \Exception
 
     public static function createFromResponse($response)
     {
-        $object = static::parseResponseBody($response);
+        $error = static::parseResponseBody($response);
 
         $field = null;
-        if (! empty($object->field)) {
-            $field = $object->field;
-        }
-// die(var_dump($object));
 
         return new self(
-            "Error executing API call ({$object->message})}",
+            "Error executing API call ({$error})}",
             $response->getStatusCode(),
             $field
         );
@@ -34,13 +30,28 @@ class ApiException extends \Exception
     protected static function parseResponseBody($response)
     {
         $body = (string) $response->getBody();
-
+        $error = "";
         $object = @json_decode($body);
+
+        if(property_exists($object, "message"))
+            $error = $object->message;
+
+        if(property_exists($object, "errors"))
+        {
+            $properties = array_keys(get_object_vars($object->errors));
+
+            if(is_array($properties))
+                $error_array = $object->errors->{$properties[0]};
+
+            if(is_array($error_array))
+                $error = $error_array[0];
+
+        }
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new self("Unable to decode response: '{$body}'.");
         }
 
-        return $object;
+        return $error;
     }
 }

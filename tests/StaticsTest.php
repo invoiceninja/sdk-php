@@ -18,7 +18,7 @@ class StaticsTest extends TestCase
 {
 
     protected string $token = "company-token-test";
-    protected string $url = "https://ninja.test";
+    protected string $url = "http://ninja.test:8000";
 
     public function testGetCurrencies()
     {

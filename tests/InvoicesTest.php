@@ -75,9 +75,110 @@ class InvoicesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $invoices = $ninja->invoices->create(['client_id' => '7LDdwRb1YK']);
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoices = $ninja->invoices->create(['client_id' => $client['data']['id']]);
         
         $this->assertTrue(is_array($invoices));
         
     } 
+
+
+    public function testInvoicePostWithItems()
+    {
+        
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoice = [
+            'client_id' => $client['data']['id'],
+            'line_items' => [
+                [
+                    'product_key' => 'test',
+                    'notes' => 'description',
+                    'quantity' => 1,
+                    'cost' => 10
+                ]
+            ],
+        ];
+
+        $invoice = $ninja->invoices->create($invoice);
+        
+        $this->assertTrue(is_array($invoice));
+        $this->assertEquals(10, $invoice['data']['amount']);
+        
+
+    } 
+
+    public function testInvoicePostWithMultiItems()
+    {
+        
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoice = [
+            'client_id' => $client['data']['id'],
+            'line_items' => [
+                [
+                    'product_key' => 'test',
+                    'notes' => 'description',
+                    'quantity' => 1,
+                    'cost' => 10
+                ],
+                [                
+                    'product_key' => 'test',
+                    'notes' => 'description',
+                    'quantity' => 1,
+                    'cost' => 10
+                ],
+            ],
+        ];
+
+        $invoice = $ninja->invoices->create($invoice);
+        
+        $this->assertTrue(is_array($invoice));
+        $this->assertEquals(20, $invoice['data']['amount']);
+        
+
+    } 
+
+    public function testInvoicePostWithMultiItemsMarkSent()
+    {
+        
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoice = [
+            'client_id' => $client['data']['id'],
+            'line_items' => [
+                [
+                    'product_key' => 'test',
+                    'notes' => 'description',
+                    'quantity' => 1,
+                    'cost' => 10
+                ],
+                [                
+                    'product_key' => 'test',
+                    'notes' => 'description',
+                    'quantity' => 1,
+                    'cost' => 10
+                ],
+            ],
+        ];
+
+        $invoice = $ninja->invoices->create($invoice, ['mark_sent' => "true"]);
+        
+        $this->assertTrue(is_array($invoice));
+        $this->assertEquals(20, $invoice['data']['amount']);
+        
+        $this->assertEquals(20, $invoice['data']['balance']);
+
+    } 
+
 }

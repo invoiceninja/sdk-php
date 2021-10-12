@@ -250,7 +250,7 @@ class AbstractModel
             CURLOPT_HTTPHEADER  => [
                 'Content-Type: application/json',
                 'Content-Length: ' . strlen($data),
-                'X-Ninja-Token: '. Config::getToken(),
+                'X-API-Token: '. Config::getToken(),
             ],
         ];
 

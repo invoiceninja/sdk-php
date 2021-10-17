@@ -55,7 +55,7 @@ class InvoiceNinja
 
 	public Statics $statics;
 
-	public Expenses $expense;
+	public Expenses $expenses;
 
 	public RecurringInvoices $recurring_invoices;
 

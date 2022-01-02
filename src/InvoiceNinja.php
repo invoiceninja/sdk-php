@@ -39,6 +39,8 @@ class InvoiceNinja
 
 	private array $headers = [];
 
+	private array $options = [];
+
 	private Client $httpClient;
 
 	public Clients $clients;
@@ -80,6 +82,9 @@ class InvoiceNinja
     	$this->initialize();
     }
 
+    /**
+     * @return $this 
+     */
     private function initialize()
     {
     	$this->clients = new Clients($this);
@@ -99,6 +104,7 @@ class InvoiceNinja
 
     	return $this;
     }
+
     /**
      * @param string $url 
      * @return $this 
@@ -110,6 +116,10 @@ class InvoiceNinja
     	return $this;
     }
 
+    /**
+     * @param string $url 
+     * @return $this 
+     */
     public function setToken($token)
     {
     	$this->token = $token;
@@ -117,17 +127,41 @@ class InvoiceNinja
     	return $this;
     }
 
+    /**
+     * @param array $options
+     * @return $this
+     */
+    public function setOptions(array $options)
+    {
+    	$this->options = array_merge($this->options, $options);
+
+    	return $this;
+    }
+
+    /**
+     * @return array
+     */
+
+    private function getOptions()
+    {
+    	return $this->options;
+    }
+
+    /**
+     * @return string 
+     */
 	public function getToken()
 	{
 		return $this->token;
 	}
 
-    /** @return string  */
+    /** 
+     * @return string  
+     */
     private function getUrl() :string
     {
-    	return $this->endpoint_url;
-    }
-
+    	return rtrim($this->endpoint_url, '/');
+	}
     /**
      * @param array $headers 
      * @return $this 
@@ -139,7 +173,9 @@ class InvoiceNinja
     	return $this;
     }
 
-    /** @return array  */
+    /** 
+     * @return array  
+     */
     private function getHeaders()
     {
     	return $this->headers;
@@ -156,7 +192,9 @@ class InvoiceNinja
     	return $this;
     }
 
-    /** @return array  */
+    /** 
+     * @return array  
+     */
     private function buildHeaders() :array
     {
 		$headers = [
@@ -167,13 +205,17 @@ class InvoiceNinja
 		return array_merge($headers, $this->getHeaders());
     }
 
-	/** @return Client  */
+	/** 
+	 * @return Client  
+	 */
 	private function httpClient()
 	{
-		$this->httpClient = new \GuzzleHttp\Client([
-			'verify' => false,
-			'headers' => $this->buildHeaders()
-		]);
+		$this->httpClient = new \GuzzleHttp\Client(
+			array_merge($this->options,[
+				// 'verify' => false,
+				'headers' => $this->buildHeaders()
+			])
+		);
 
 		return $this;
 	}
@@ -195,10 +237,7 @@ class InvoiceNinja
 		
 			$response =  $this->httpClient->request($method, $url, $payload);
 		
-			if($response->getStatusCode() == 200)	
-				return json_decode($response->getBody()->getContents(),true);
-
-			//get appropriate response for status and return
+			return json_decode($response->getBody()->getContents(),true);
 
 		}
 		catch(GuzzleException $e) {
@@ -206,9 +245,7 @@ class InvoiceNinja
             if (method_exists($e, 'hasResponse') && method_exists($e, 'getResponse') && $e->hasResponse()) 
             	throw ApiException::createFromResponse($e->getResponse());
                 
-
             throw new ApiException($e->getMessage(), $e->getCode());
-
 
 		}
 	}

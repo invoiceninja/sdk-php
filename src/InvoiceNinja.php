@@ -28,6 +28,7 @@ use InvoiceNinja\Sdk\Endpoints\Statics;
 use InvoiceNinja\Sdk\Endpoints\Tasks;
 use InvoiceNinja\Sdk\Endpoints\TaxRates;
 use InvoiceNinja\Sdk\Endpoints\Vendors;
+use InvoiceNinja\Sdk\Endpoints\Users;
 use InvoiceNinja\Sdk\Exceptions\ApiException;
 
 class InvoiceNinja
@@ -69,6 +70,8 @@ class InvoiceNinja
 
 	public Vendors $vendors;
 
+	public Users $users;
+
 	public Companies $companies;
 
     /**
@@ -100,6 +103,7 @@ class InvoiceNinja
     	$this->projects = new Projects($this);
     	$this->tasks = new Tasks($this);
     	$this->vendors = new Vendors($this);
+    	$this->users = new Users($this);
     	$this->companies = new Companies($this);
 
     	return $this;

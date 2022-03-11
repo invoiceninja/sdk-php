@@ -75,7 +75,9 @@ class CreditsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $credits = $ninja->credits->create(['clint_id' => '7LDdwRb1YK']);
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $credits = $ninja->credits->create(['client_id' => $client['data']['id']]);
         
         $this->assertTrue(is_array($credits));
         

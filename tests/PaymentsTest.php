@@ -74,4 +74,41 @@ class PaymentsTest extends TestCase
         $this->assertTrue(is_array($payments));
         
     } 
+
+    public function testInvoicePostPaymentWithInvoicePayment()
+    {
+        
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoice = [
+            'client_id' => $client['data']['id'],
+            'line_items' => [
+                [
+                    'product_key' => 'test',
+                    'notes' => 'description',
+                    'quantity' => 1,
+                    'cost' => 10
+                ]
+            ],
+        ];
+
+        $invoice = $ninja->invoices->create($invoice, ['mark_sent' => true]);
+
+        $payments = $ninja->payments->create([
+            'client_id' => $client['data']['id'], 
+            'amount' => 10,
+            'invoices' => [
+                [
+                'invoice_id' => $invoice['data']['id'],
+                'amount' => 10
+                ],
+            ],
+        ]);
+        
+        $this->assertTrue(is_array($payments));
+        
+    } 
 }

@@ -17,7 +17,9 @@ use GuzzleHttp\Exception\RequestException;
 use InvoiceNinja\Sdk\Endpoints\Clients;
 use InvoiceNinja\Sdk\Endpoints\Companies;
 use InvoiceNinja\Sdk\Endpoints\Credits;
+use InvoiceNinja\Sdk\Endpoints\ExpenseCategories;
 use InvoiceNinja\Sdk\Endpoints\Expenses;
+use InvoiceNinja\Sdk\Endpoints\GroupSettings;
 use InvoiceNinja\Sdk\Endpoints\Invoices;
 use InvoiceNinja\Sdk\Endpoints\Payments;
 use InvoiceNinja\Sdk\Endpoints\Products;
@@ -69,6 +71,10 @@ class InvoiceNinja
 
 	public Companies $companies;
 
+	public ExpenseCategories $expense_categories;
+
+	public GroupSettings $group_settings;
+
     /**
      * @param string $token 
      * @return void 
@@ -96,7 +102,9 @@ class InvoiceNinja
     	$this->tasks = new Tasks($this);
     	$this->vendors = new Vendors($this);
     	$this->companies = new Companies($this);
-
+    	$this->expense_categories = new ExpenseCategories($this);
+    	$this->group_settings = new GroupSettings($this);
+    	
     	return $this;
     }
     /**

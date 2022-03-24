@@ -12,8 +12,8 @@ class AbstractModel
     public $id;
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public static function all()
     {
         $url = static::getRoute();
@@ -28,8 +28,8 @@ class AbstractModel
     }
 
     /**
-    * @return \InvoiceNinja\Models\AbstractModel
-    */
+     * @return \InvoiceNinja\Models\AbstractModel
+     */
     public static function find($id)
     {
         $url = static::getRoute() . '/' . $id;
@@ -39,8 +39,8 @@ class AbstractModel
     }
 
     /**
-    * @return \InvoiceNinja\Models\AbstractModel
-    */
+     * @return \InvoiceNinja\Models\AbstractModel
+     */
     public static function findByClientId($id)
     {
         $url = sprintf('%s?client_id=%s', static::getRoute(), $id);
@@ -62,8 +62,8 @@ class AbstractModel
     */
 
     /**
-    * @return \InvoiceNinja\Models\AbstractModel
-    */
+     * @return \InvoiceNinja\Models\AbstractModel
+     */
     public function save()
     {
         $url = static::getRoute();
@@ -93,6 +93,16 @@ class AbstractModel
     public function delete()
     {
         return $this->sendAction('delete');
+    }
+
+    public function email()
+    {
+        return $this->sendAction('emailInvoice');
+    }
+
+    public function markPaid()
+    {
+        return $this->sendAction('markPaid');
     }
 
     public static function subscribeCreate($target)
@@ -176,6 +186,7 @@ class AbstractModel
         curl_setopt_array($curl, $opts);
         $response = curl_exec($curl);
 
+//        dd($response);
         if ($raw) {
             return $response;
         } else {
@@ -187,5 +198,6 @@ class AbstractModel
             }
         }
     }
+
 
 }

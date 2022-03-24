@@ -15,13 +15,15 @@ class Invoice extends AbstractModel
 
     }
 
-    public function addInvoiceItem($product_key, $notes, $cost, $qty = 1)
+    public function addInvoiceItem($product_key, $notes, $cost, $qty = 1,$tax_rate=0,$tax_name='')
     {
         $item = new stdClass();
         $item->product_key = $product_key;
         $item->notes = $notes;
         $item->cost = $cost;
         $item->qty = $qty;
+        $item->tax_rate1 = $tax_rate;
+        $item->tax_name1 = $tax_name;
 
         $this->invoice_items[] = $item;
     }
@@ -30,7 +32,7 @@ class Invoice extends AbstractModel
     {
         $url = static::getRoute() . '/' . $this->id;
         $url = str_replace('invoices', 'download', $url);
-        
+
         return static::sendRequest($url, false, 'GET', true);
     }
 }

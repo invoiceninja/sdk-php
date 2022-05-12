@@ -1,10 +1,10 @@
 <?php
 /**
- * Product Ninja (https://invoiceninja.com).
+ * Invoice Ninja (https://invoiceninja.com).
  *
  * @link https://github.com/invoiceninja/sdk-php source repository
  *
- * @copyright Copyright (c) 2021. Product Ninja LLC (https://invoiceninja.com)
+ * @copyright Copyright (c) 2022. Invoice Ninja LLC (https://invoiceninja.com)
  *
  * @license https://opensource.org/licenses/MIT
  */

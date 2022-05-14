@@ -91,23 +91,82 @@ Create a new client
     $client = $ninja->clients->create(['name' => 'A new client']);
 
 ```
+
+Create a new Client with a contact
+```php
+    $clients = $ninja->clients->create([
+        'name' => 'Brand spanking new client',
+        'contacts' => [
+            [
+                'first_name' => 'first',
+                'last_name' => 'last',
+                'send_email' => true,
+                'email' => 'gi-joe@example.com',
+            ],
+
+        ]
+    ]);
+    
+```
+
 Update an existing client
 ```php
     $client = $ninja->clients->update("CLIENT_HASHED_ID",['name' => 'A client with a updated name']);
 
 ```
+
 Create an invoice
 ```php
-    $client = $ninja->invoices->create(['client_id' => CLIENT_HASHED_ID]);
-
+    $invoice = $ninja->invoices->create([
+        'client_id' => $client_hashed_id,
+        'date' => '2022-10-31',
+        'due_date' => '2022-12-01',
+        'terms' => 'These are your invoice terms.',
+        'footer' => 'Invoice footer text',
+        'line_items' => [
+            [
+                'product_key' => 'some_product_key',
+                'notes' => 'description',
+                'quantity' => 1,
+                'cost' => 10
+            ],
+            [                
+                'product_key' => 'another_product_key',
+                'notes' => 'description',
+                'quantity' => 1,
+                'cost' => 10
+            ],
+        ],
+    ]);
 ```
 
 When creating an invoice, you can perform actions on the invoice in a single call, for example, say you wish to create an invoice and also apply a payment to the invoice:
 
 ```php
-    $invoice = $ninja->invoices->create(['client_id'=> 'CLIENT_HASHED_ID'], ['mark_paid' => true]);
+    $invoice = $ninja->invoices->create([
+        'client_id' => $client_hashed_id,
+        'date' => '2022-10-31',
+        'due_date' => '2022-12-01',
+        'terms' => 'These are your invoice terms.',
+        'footer' => 'Invoice footer text',
+        'line_items' => [
+            [
+                'product_key' => 'some_product_key',
+                'notes' => 'description',
+                'quantity' => 1,
+                'cost' => 10
+            ],
+            [                
+                'product_key' => 'another_product_key',
+                'notes' => 'description',
+                'quantity' => 1,
+                'cost' => 10
+            ],
+        ],
+    ], 
+    ['mark_paid' => true] //the second parameter in this method is an array of actions ie mark_paid,mark_sent_send_email,auto_bill
+);
 ```
-
 Or if you wish to apply a partial payment
 
 ```php
@@ -152,3 +211,5 @@ The following are a list of available bulk actions for invoices:
 + cancel
 + reverse
 + email
+
+For more examples of what can be achieved with the SDK, please inspect the tests folder in this repository. If you need clarity or more explicit examples of how to use the SDK, please create a issue.

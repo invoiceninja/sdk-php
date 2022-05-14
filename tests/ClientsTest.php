@@ -80,4 +80,28 @@ class ClientsTest extends TestCase
         $this->assertTrue(is_array($clients));
         
     } 
+
+
+    public function testClientWithContactPost()
+    {
+        
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
+        $clients = $ninja->clients->create([
+            'name' => 'Brand spanking new client',
+            'contacts' => [
+                [
+                    'first_name' => 'first',
+                    'last_name' => 'last',
+                    'send_email' => true,
+                    'email' => 'joe@gmail.com',
+                ],
+
+            ]
+        ]);
+        
+        $this->assertTrue(is_array($clients));
+        
+    } 
 }

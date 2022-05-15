@@ -164,7 +164,7 @@ When creating an invoice, you can perform actions on the invoice in a single cal
             ],
         ],
     ], 
-    ['mark_paid' => true] //the second parameter in this method is an array of actions ie mark_paid,mark_sent_send_email,auto_bill
+    ['paid' => true] //the second parameter in this method is an array of actions ie paid,mark_sent_send_email,auto_bill
 );
 ```
 Or if you wish to apply a partial payment
@@ -205,7 +205,7 @@ The following are a list of available bulk actions for invoices:
 + restore
 + archive
 + delete
-+ mark_paid
++ paid
 + clone_to_quote
 + clone_to_invoice
 + cancel

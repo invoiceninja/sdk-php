@@ -181,7 +181,7 @@ class InvoicesTest extends TestCase
 
     } 
 
-    public function downloadInvoice()
+    public function testDownloadInvoice()
     {
 
         $ninja = new InvoiceNinja($this->token);
@@ -209,10 +209,10 @@ class InvoicesTest extends TestCase
 
         $invoice = $ninja->invoices->create($invoice, ['mark_sent' => "true"]);
 
-        $download = $ninja->invoices->bulk('download', [$invoice['data']['id']]);
+        $download = $ninja->invoices->download([$invoice['data']['id']]);
 
         $this->assertNotNull($download);
-        var_dump($download);
+
     }
 
 }

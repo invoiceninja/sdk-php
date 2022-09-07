@@ -262,6 +262,33 @@ class InvoiceNinja
 		}
 	}
 
+	public function stream(string $method, string $uri, array $payload)
+	{
+
+		$this->httpClient();
+
+		$url = $this->getUrl() . $uri;
+
+		try{
+		
+			$response =  $this->httpClient->request($method, $url, $payload);
+		
+			$body = $response->getBody();
+
+			return (string)$body;
+
+		}
+		catch(GuzzleException $e) {
+			
+            if (method_exists($e, 'hasResponse') && method_exists($e, 'getResponse') && $e->hasResponse()) 
+            	throw ApiException::createFromResponse($e->getResponse());
+                
+            throw new ApiException($e->getMessage(), $e->getCode());
+
+		}
+
+	}
+
 }
 
 

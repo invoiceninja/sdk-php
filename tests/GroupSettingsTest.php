@@ -32,7 +32,6 @@ class GroupSettingsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-
         $settings = new \stdClass;
         $settings->currency_id = '1';
 

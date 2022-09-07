@@ -181,4 +181,38 @@ class InvoicesTest extends TestCase
 
     } 
 
+    public function downloadInvoice()
+    {
+
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $invoice = [
+            'client_id' => $client['data']['id'],
+            'line_items' => [
+                [
+                    'product_key' => 'test',
+                    'notes' => 'description',
+                    'quantity' => 1,
+                    'cost' => 10
+                ],
+                [                
+                    'product_key' => 'test',
+                    'notes' => 'description',
+                    'quantity' => 1,
+                    'cost' => 10
+                ],
+            ],
+        ];
+
+        $invoice = $ninja->invoices->create($invoice, ['mark_sent' => "true"]);
+
+        $download = $ninja->invoices->bulk('download', [$invoice['data']['id']]);
+
+        $this->assertNotNull($download);
+        var_dump($download);
+    }
+
 }

@@ -69,7 +69,9 @@ class PaymentsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $payments = $ninja->payments->create(['client_id' => '7LDdwRb1YK', 'amount' => 10]);
+        $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
+
+        $payments = $ninja->payments->create(['client_id' => $client['data']['id'], 'amount' => 10]);
         
         $this->assertTrue(is_array($payments));
         

@@ -115,6 +115,11 @@ Update an existing client
 
 ```
 
+***Please Note***
+
+When updating a client, you must always include the current contacts (array), if no contacts are included, the system will wipe the contacts from the client record.
+
+
 Create an invoice
 ```php
     $invoice = $ninja->invoices->create([

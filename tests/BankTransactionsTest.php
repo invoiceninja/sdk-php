@@ -34,13 +34,13 @@ class BankTransactionsTest extends TestCase
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 
-        $subscriptions = $ninja->bank_transactions->create(['bank_integration_id' => $bank_integrations['data']['id'], 'name' => $this->faker->firstName]);
+        $transactions = $ninja->bank_transactions->create(['bank_integration_id' => $bank_integrations['data']['id'], 'name' => $this->faker->firstName]);
         
-        $this->assertTrue(is_array($subscriptions));
+        $this->assertTrue(is_array($transactions));
         
     } 
 
-    public function testSubscriptionGet()
+    public function testTransactionGet()
     {
     
         $ninja = new InvoiceNinja($this->token);
@@ -48,21 +48,21 @@ class BankTransactionsTest extends TestCase
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 
-        $subscription = $ninja->bank_transactions->create(['bank_integration_id' => $bank_integrations['data']['id'],'name' => $this->faker->firstName]);
+        $transaction = $ninja->bank_transactions->create(['bank_integration_id' => $bank_integrations['data']['id'],'name' => $this->faker->firstName]);
         
-        $this->assertTrue(is_array($subscription));
+        $this->assertTrue(is_array($transaction));
 
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $subscriptions = $ninja->bank_transactions->get($subscription['data']['id']);
+        $transactions = $ninja->bank_transactions->get($transaction['data']['id']);
 
-        $this->assertTrue(is_array($subscriptions));
+        $this->assertTrue(is_array($transactions));
         
     } 
 
 
-    public function testSubscriptionPut()
+    public function testTransactionPut()
     {
         
         $ninja = new InvoiceNinja($this->token);
@@ -70,16 +70,16 @@ class BankTransactionsTest extends TestCase
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 
-        $subscription = $ninja->bank_transactions->create(['bank_integration_id' => $bank_integrations['data']['id'], 'name' => $this->faker->firstName]);
+        $transaction = $ninja->bank_transactions->create(['bank_integration_id' => $bank_integrations['data']['id'], 'name' => $this->faker->firstName]);
 
-        $subscriptions = $ninja->bank_transactions->update($subscription['data']['id'], ['bank_integration_id' => $bank_integrations['data']['id'], 'name' => $this->faker->firstName, 'date' => '2022-10-10', 'amount' => 100]);
+        $transactions = $ninja->bank_transactions->update($transaction['data']['id'], ['bank_integration_id' => $bank_integrations['data']['id'], 'name' => $this->faker->firstName, 'date' => '2022-10-10', 'amount' => 100]);
         
-        $this->assertTrue(is_array($subscriptions));
+        $this->assertTrue(is_array($transactions));
         
     } 
 
 
-    public function testSubscriptionPost()
+    public function testTransactionPost()
     {
         
         $ninja = new InvoiceNinja($this->token);
@@ -87,9 +87,9 @@ class BankTransactionsTest extends TestCase
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 
-        $subscriptions = $ninja->bank_transactions->create(['bank_integration_id' => $bank_integrations['data']['id'], 'name' => $this->faker->firstName]);
+        $transactions = $ninja->bank_transactions->create(['bank_integration_id' => $bank_integrations['data']['id'], 'name' => $this->faker->firstName]);
         
-        $this->assertTrue(is_array($subscriptions));
+        $this->assertTrue(is_array($transactions));
         
     } 
 }

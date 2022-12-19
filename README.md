@@ -36,6 +36,8 @@ $invoices = $ninja->invoices->all();
 - Companies
 - Subscriptions
 - Purchase Orders
+- Bank Integrations
+- Bank Transactions
 
 ### Retrieving Models
 

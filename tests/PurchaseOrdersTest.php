@@ -1,10 +1,10 @@
 <?php
 /**
- * PurchaseOrder Ninja (https://invoiceninja.com).
+ * PurchaseOrder Ninja (https://purchase_orderninja.com).
  *
- * @link https://github.com/invoiceninja/sdk-php source repository
+ * @link https://github.com/purchase_orderninja/sdk-php source repository
  *
- * @copyright Copyright (c) 2022. PurchaseOrder Ninja LLC (https://invoiceninja.com)
+ * @copyright Copyright (c) 2022. PurchaseOrder Ninja LLC (https://purchase_orderninja.com)
  *
  * @license https://opensource.org/licenses/MIT
  */
@@ -27,7 +27,7 @@ class PurchaseOrdersTest extends TestCase
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->purchase_orders->create(['vendor_id' => $client['data']['id']]);
+        $purchase_order = $ninja->purchase_orders->create(['vendor_id' => $client['data']['id']]);
 
         $purchase_orders = $ninja->purchase_orders->all();
 
@@ -43,9 +43,9 @@ class PurchaseOrdersTest extends TestCase
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->purchase_orders->create(['vendor_id' => $client['data']['id']]);
+        $purchase_order = $ninja->purchase_orders->create(['vendor_id' => $client['data']['id']]);
 
-        $purchase_orders = $ninja->purchase_orders->get($invoice['data']['id']);
+        $purchase_orders = $ninja->purchase_orders->get($purchase_order['data']['id']);
 
         $this->assertTrue(is_array($purchase_orders));
         
@@ -60,9 +60,9 @@ class PurchaseOrdersTest extends TestCase
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
-        $invoice = $ninja->purchase_orders->create(['vendor_id' => $client['data']['id']]);
+        $purchase_order = $ninja->purchase_orders->create(['vendor_id' => $client['data']['id']]);
 
-        $purchase_orders = $ninja->purchase_orders->update($invoice['data']['id'], ['discount' => '10']);
+        $purchase_orders = $ninja->purchase_orders->update($purchase_order['data']['id'], ['discount' => '10']);
         
         $this->assertTrue(is_array($purchase_orders));
         
@@ -92,7 +92,7 @@ class PurchaseOrdersTest extends TestCase
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
-        $invoice = [
+        $purchase_order = [
             'vendor_id' => $client['data']['id'],
             'line_items' => [
                 [
@@ -104,10 +104,10 @@ class PurchaseOrdersTest extends TestCase
             ],
         ];
 
-        $invoice = $ninja->purchase_orders->create($invoice);
+        $purchase_order = $ninja->purchase_orders->create($purchase_order);
         
-        $this->assertTrue(is_array($invoice));
-        $this->assertEquals(10, $invoice['data']['amount']);
+        $this->assertTrue(is_array($purchase_order));
+        $this->assertEquals(10, $purchase_order['data']['amount']);
         
 
     } 
@@ -120,7 +120,7 @@ class PurchaseOrdersTest extends TestCase
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
-        $invoice = [
+        $purchase_order = [
             'vendor_id' => $client['data']['id'],
             'line_items' => [
                 [
@@ -138,10 +138,10 @@ class PurchaseOrdersTest extends TestCase
             ],
         ];
 
-        $invoice = $ninja->purchase_orders->create($invoice);
+        $purchase_order = $ninja->purchase_orders->create($purchase_order);
         
-        $this->assertTrue(is_array($invoice));
-        $this->assertEquals(20, $invoice['data']['amount']);
+        $this->assertTrue(is_array($purchase_order));
+        $this->assertEquals(20, $purchase_order['data']['amount']);
         
 
     } 
@@ -154,7 +154,7 @@ class PurchaseOrdersTest extends TestCase
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
-        $invoice = [
+        $purchase_order = [
             'vendor_id' => $client['data']['id'],
             'line_items' => [
                 [
@@ -172,12 +172,12 @@ class PurchaseOrdersTest extends TestCase
             ],
         ];
 
-        $invoice = $ninja->purchase_orders->create($invoice, ['mark_sent' => "true"]);
+        $purchase_order = $ninja->purchase_orders->create($purchase_order, ['mark_sent' => "true"]);
         
-        $this->assertTrue(is_array($invoice));
+        $this->assertTrue(is_array($purchase_order));
 
-        $this->assertEquals(20, $invoice['data']['amount']);
-        $this->assertEquals(20, $invoice['data']['balance']);
+        $this->assertEquals(20, $purchase_order['data']['amount']);
+        $this->assertEquals(20, $purchase_order['data']['balance']);
 
     } 
 
@@ -189,7 +189,7 @@ class PurchaseOrdersTest extends TestCase
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
-        $invoice = [
+        $purchase_order = [
             'vendor_id' => $client['data']['id'],
             'line_items' => [
                 [
@@ -207,9 +207,9 @@ class PurchaseOrdersTest extends TestCase
             ],
         ];
 
-        $invoice = $ninja->purchase_orders->create($invoice, ['mark_sent' => "true"]);
+        $purchase_order = $ninja->purchase_orders->create($purchase_order, ['mark_sent' => "true"]);
 
-        $download = $ninja->purchase_orders->download([$invoice['data']['id']]);
+        $download = $ninja->purchase_orders->download([$purchase_order['data']['id']]);
 
         $this->assertNotNull($download);
 

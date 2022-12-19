@@ -44,14 +44,14 @@ class BankIntegrationsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $subscription = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
+        $integration = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
         
-        $this->assertTrue(is_array($subscription));
+        $this->assertTrue(is_array($integration));
 
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $bank_integrations = $ninja->bank_integrations->get($subscription['data']['id']);
+        $bank_integrations = $ninja->bank_integrations->get($integration['data']['id']);
 
         $this->assertTrue(is_array($bank_integrations));
         
@@ -64,9 +64,9 @@ class BankIntegrationsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $subscription = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
+        $integration = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 
-        $bank_integrations = $ninja->bank_integrations->update($subscription['data']['id'], ['bank_account_name' => $this->faker->firstName]);
+        $bank_integrations = $ninja->bank_integrations->update($integration['data']['id'], ['bank_account_name' => $this->faker->firstName]);
         
         $this->assertTrue(is_array($bank_integrations));
         

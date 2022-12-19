@@ -14,6 +14,8 @@ namespace InvoiceNinja\Sdk;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use InvoiceNinja\Sdk\Endpoints\BankIntegrations;
+use InvoiceNinja\Sdk\Endpoints\BankTransactions;
 use InvoiceNinja\Sdk\Endpoints\Clients;
 use InvoiceNinja\Sdk\Endpoints\Companies;
 use InvoiceNinja\Sdk\Endpoints\Credits;
@@ -82,6 +84,10 @@ class InvoiceNinja
 	public Subscriptions $subscriptions;
 
 	public PurchaseOrders $purchase_orders;
+
+	public BankTransactions $bank_transactions;
+
+	public BankIntegrations $bank_integrations;
 	
     /**
      * @param string $token 
@@ -117,6 +123,8 @@ class InvoiceNinja
     	$this->group_settings = new GroupSettings($this);
     	$this->subscriptions = new Subscriptions($this);
     	$this->purchase_orders = new PurchaseOrders($this);
+    	$this->bank_transactions = new BankTransactions($this);
+    	$this->bank_integrations = new BankIntegrations($this);
     	
     	return $this;
     }

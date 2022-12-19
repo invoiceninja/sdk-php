@@ -27,12 +27,17 @@ $invoices = $ninja->invoices->all();
 - TaxRates
 - Statics
 - Expenses
+- Expense Categories
 - Recurring Invoices
 - Credits
 - Projects
 - Tasks
 - Vendors
 - Companies
+- Subscriptions
+- Purchase Orders
+- Bank Integrations
+- Bank Transactions
 
 ### Retrieving Models
 

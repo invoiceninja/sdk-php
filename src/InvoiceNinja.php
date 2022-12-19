@@ -24,9 +24,11 @@ use InvoiceNinja\Sdk\Endpoints\Invoices;
 use InvoiceNinja\Sdk\Endpoints\Payments;
 use InvoiceNinja\Sdk\Endpoints\Products;
 use InvoiceNinja\Sdk\Endpoints\Projects;
+use InvoiceNinja\Sdk\Endpoints\PurchaseOrders;
 use InvoiceNinja\Sdk\Endpoints\Quotes;
 use InvoiceNinja\Sdk\Endpoints\RecurringInvoices;
 use InvoiceNinja\Sdk\Endpoints\Statics;
+use InvoiceNinja\Sdk\Endpoints\Subscriptions;
 use InvoiceNinja\Sdk\Endpoints\Tasks;
 use InvoiceNinja\Sdk\Endpoints\TaxRates;
 use InvoiceNinja\Sdk\Endpoints\Vendors;
@@ -77,6 +79,10 @@ class InvoiceNinja
 
 	public GroupSettings $group_settings;
 
+	public Subscriptions $subscriptions;
+
+	public PurchaseOrders $purchase_orders;
+	
     /**
      * @param string $token 
      * @return void 
@@ -109,6 +115,8 @@ class InvoiceNinja
     	$this->companies = new Companies($this);
     	$this->expense_categories = new ExpenseCategories($this);
     	$this->group_settings = new GroupSettings($this);
+    	$this->subscriptions = new Subscriptions($this);
+    	$this->purchase_orders = new PurchaseOrders($this);
     	
     	return $this;
     }

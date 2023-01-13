@@ -248,7 +248,7 @@ class InvoiceNinja
 	 * @param string $method 
 	 * @param string $uri 
 	 * @param array $payload 
-	 * @return void 
+	 * @return mixed 
 	 * @throws GuzzleException 
 	 */
 	public function send(string $method, string $uri, array $payload)

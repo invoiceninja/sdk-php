@@ -33,7 +33,7 @@ class BankIntegrationsTest extends TestCase
         $ninja->setUrl($this->url);
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
-        
+
         $this->assertTrue(is_array($bank_integrations));
         
     } 

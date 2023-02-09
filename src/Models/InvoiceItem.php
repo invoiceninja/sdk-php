@@ -71,6 +71,13 @@ class InvoiceItem extends BaseModel
 
     public string $custom_value4 = '';
 
+    /**
+     * See the consts in this file for
+     * the range of values 
+     *
+     * By default the product type will
+     * be used.
+     */
     public $type_id = self::TYPE_PRODUCT;
 
 }

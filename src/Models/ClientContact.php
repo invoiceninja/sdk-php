@@ -15,14 +15,37 @@ class ClientContact extends BaseModel
 {
     protected string $model = 'ClientContact';
 
+    /**
+     * The first name of the contact - optional
+     * 
+     */
     public string $first_name = '';
     
+    /**
+     * The last name of the contact - optional
+     * 
+     */
     public string $last_name = '';
     
+    /**
+     * Email - optional
+     * 
+     */
     public string $email = '';
 
+    /**
+     * Phone number - optional
+     * 
+     */
     public string $phone = '';
 
+    /**
+     * Flag for whether the contact will 
+     * receive emails. - optional 
+     *
+     * default - true
+     * 
+     */
     public bool $send_email = true;
 
     public string $custom_value1 = '';

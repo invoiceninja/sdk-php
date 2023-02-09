@@ -72,6 +72,9 @@ class Client extends BaseModel
     public ?string $custom_value4 = null;
 
     /**
+     * The array of client contacts. This is optional, however
+     * the API will always set a blank ClientContact if none are set
+     * 
      * @var ClientContact[]
      */
     public array $contacts = [];

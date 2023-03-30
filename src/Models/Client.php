@@ -165,7 +165,7 @@ class Client extends BaseModel
      *      
      * https://invoiceninja.github.io/docs/statics/#page-content
      */
-    public ?string $country_id = null;
+    public ?string $shipping_country_id = null;
 
     /**
      * @property-read float $balance - The client Balance

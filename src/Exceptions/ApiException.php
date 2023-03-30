@@ -32,6 +32,7 @@ class ApiException extends \Exception
         $body = (string) $response->getBody();
         $error = "";
         $object = @json_decode($body);
+        $error_array = [];
 
         if(property_exists($object, "message"))
             $error = $object->message;
@@ -40,10 +41,10 @@ class ApiException extends \Exception
         {
             $properties = array_keys(get_object_vars($object->errors));
 
-            if(is_array($properties))
+            if(is_array($properties) && count($properties) >=1)
                 $error_array = $object->errors->{$properties[0]};
 
-            if(is_array($error_array))
+            if(is_array($error_array) && count($error_array) >=1)
                 $error = $error_array[0];
 
         }

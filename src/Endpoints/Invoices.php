@@ -26,5 +26,12 @@ class Invoices extends BaseEntity
         $this->ninja = $ninja;
     }
 
+    public function download(array $entity, array $includes = [])
+    {
+        $data = ['entity_id' => $entity['data']['id']];
+
+        return $this->ninja->stream("GET", "{$this->uri}/{$data['entity_id']}/download", $includes);
+    }
+
 }
 

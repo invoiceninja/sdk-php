@@ -244,7 +244,7 @@ class Invoice extends BaseModel
 
     public function setClientId(string $client_id): self
     {
-        $this->client_id = $client->id;
+        $this->client_id = $client_id;
 
         return $this;
     }

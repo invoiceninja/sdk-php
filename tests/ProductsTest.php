@@ -16,14 +16,11 @@ use PHPUnit\Framework\TestCase;
 
 class ProductsTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
     public function testProducts()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $products = $ninja->products->all();
 
@@ -34,8 +31,8 @@ class ProductsTest extends TestCase
     public function testInvoiceGet()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $product = $ninja->products->create(['product_key' => 'that']);
 
@@ -49,8 +46,8 @@ class ProductsTest extends TestCase
     public function testInvoicePut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $product = $ninja->products->create(['product_key' => 'thatx']);
 
@@ -64,8 +61,8 @@ class ProductsTest extends TestCase
     public function testInvoicePost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $products = $ninja->products->create(['product_key' => 'that']);
         

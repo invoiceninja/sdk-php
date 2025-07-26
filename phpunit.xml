@@ -11,5 +11,7 @@
     </testsuite>
   </testsuites>
   <php>
-    </php>
+    <env name="INVOICENINJA_TOKEN" value="company-token-test"/>
+    <env name="INVOICENINJA_URL" value="http://ninja.test:8000"/>
+  </php>
 </phpunit>

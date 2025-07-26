@@ -16,14 +16,11 @@ use PHPUnit\Framework\TestCase;
 
 class ExpensesTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
     public function testExpenses()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $expenses = $ninja->expenses->all();
 
@@ -34,8 +31,8 @@ class ExpensesTest extends TestCase
     public function testExpenseGet()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new clients']);
         $expense = $ninja->expenses->create(['client_id' => $client['data']['id']]);
@@ -50,8 +47,8 @@ class ExpensesTest extends TestCase
     public function testExpensePut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
 
         $clients = $ninja->clients->create(['name' => 'Brand spanking new client']);
@@ -67,8 +64,8 @@ class ExpensesTest extends TestCase
     public function testExpensePost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
         $expenses = $ninja->expenses->create(['client_id' => $client['data']['id']]);

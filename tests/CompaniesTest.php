@@ -16,14 +16,11 @@ use PHPUnit\Framework\TestCase;
 
 class CompaniesTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
     public function testCompanies()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $companies = $ninja->companies->all();
 
@@ -34,8 +31,8 @@ class CompaniesTest extends TestCase
     public function testCompanyGet()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $company = $ninja->companies->create([], ['include' => 'company,company.tokens']);
         $token = $company['data'][0]['company']['tokens'][0]['token'];
@@ -51,8 +48,8 @@ class CompaniesTest extends TestCase
     public function testCompanyPut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $company = $ninja->companies->create([], ['include' => 'company,company.tokens']);
         $token = $company['data'][0]['company']['tokens'][0]['token'];
@@ -68,8 +65,8 @@ class CompaniesTest extends TestCase
     public function testCompanyPost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $companies = $ninja->companies->create([], ['include' => 'company']);
 

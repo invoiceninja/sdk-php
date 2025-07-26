@@ -17,8 +17,6 @@ use PHPUnit\Framework\TestCase;
 class ClientsTest extends TestCase
 {
 
-
-
     public function testClients()
     {
         $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);

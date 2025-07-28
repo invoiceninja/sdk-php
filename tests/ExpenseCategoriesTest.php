@@ -16,9 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class ExpenseCategoriesTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
 
     public function setUp() :void
     {
@@ -29,8 +26,8 @@ class ExpenseCategoriesTest extends TestCase
 
     public function testExpenseCategoriesPost()
     {
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->text(10)]);
         
@@ -45,15 +42,15 @@ class ExpenseCategoriesTest extends TestCase
     public function testExpenseCategoryGet()
     {
     
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->text(10)]);
         
         $this->assertTrue(is_array($expense_categories));
 
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $expense_categories = $ninja->expense_categories->get($expense_categories['data']['id']);
 
@@ -65,8 +62,8 @@ class ExpenseCategoriesTest extends TestCase
     public function testExpenseCategoryPut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $expense_category = $this->faker->text(10);
         
@@ -82,8 +79,8 @@ class ExpenseCategoriesTest extends TestCase
     public function testExpenseCategoryPost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->firstName]);
         

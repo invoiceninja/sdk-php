@@ -17,14 +17,11 @@ use PHPUnit\Framework\TestCase;
 class StaticsTest extends TestCase
 {
 
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
     public function testGetCurrencies()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $currencies = $ninja->statics->currencies();
 

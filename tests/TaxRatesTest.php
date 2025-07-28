@@ -16,9 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class TaxRatesTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
     public $faker;
 
     protected function setUp(): void
@@ -29,8 +26,8 @@ class TaxRatesTest extends TestCase
     public function testProducts()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $tax_rates = $ninja->tax_rates->all();
 
@@ -41,8 +38,8 @@ class TaxRatesTest extends TestCase
     public function testTaxRateGet()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $tax_rate = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->word()]);
 
@@ -56,8 +53,8 @@ class TaxRatesTest extends TestCase
     public function testTaxRatePut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $tax_rate = $ninja->tax_rates->create(['rate' => 10, 'name' => 'GSTa']);
 
@@ -71,8 +68,8 @@ class TaxRatesTest extends TestCase
     public function testTaxRatePost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $tax_rates = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->word()]);
         

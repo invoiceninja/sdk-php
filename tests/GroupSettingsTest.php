@@ -16,10 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class GroupSettingsTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
-
     public function setUp() :void
     {
         parent::setUp();
@@ -29,8 +25,8 @@ class GroupSettingsTest extends TestCase
 
     public function testAddGroupSetting()
     {
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $settings = new \stdClass;
         $settings->currency_id = '1';
@@ -48,8 +44,8 @@ class GroupSettingsTest extends TestCase
 
     public function testUpdateGroupSetting()
     {
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $settings = new \stdClass;
         $settings->currency_id = '1';

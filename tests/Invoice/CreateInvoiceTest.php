@@ -19,17 +19,14 @@ use PHPUnit\Framework\TestCase;
 
 class CreateInvoiceTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
     public function setUp() :void
     {
         parent::setUp();
         $this->faker = \Faker\Factory::create();
     }
 
-    // $ninja = new InvoiceNinja($this->token);
-    // $ninja->setUrl($this->url);
+    // $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+    // $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
     public function testInitInvoice()
     {

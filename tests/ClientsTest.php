@@ -16,13 +16,13 @@ use PHPUnit\Framework\TestCase;
 
 class ClientsTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
+
+
 
     public function testClients()
     {
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $clients = $ninja->clients->create(['name' => 'Brand spanking new client']);
         
@@ -37,15 +37,15 @@ class ClientsTest extends TestCase
     public function testClientGet()
     {
     
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         
         $this->assertTrue(is_array($client));
 
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $clients = $ninja->clients->get($client['data']['id']);
 
@@ -57,8 +57,8 @@ class ClientsTest extends TestCase
     public function testClientPut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
@@ -185,8 +185,8 @@ class ClientsTest extends TestCase
             ]
         ];
 
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->clients->create($create);
 
@@ -205,8 +205,8 @@ class ClientsTest extends TestCase
     public function testClientPost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $clients = $ninja->clients->create(['name' => 'Brand spanking new client']);
         
@@ -218,8 +218,8 @@ class ClientsTest extends TestCase
     public function testClientWithContactPost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $clients = $ninja->clients->create([
             'name' => 'Brand spanking new client',

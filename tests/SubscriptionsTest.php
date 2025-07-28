@@ -16,9 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class SubscriptionsTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
 
 
     public function setUp() :void
@@ -29,8 +26,8 @@ class SubscriptionsTest extends TestCase
 
     public function testSubscriptions()
     {
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
         
@@ -41,15 +38,15 @@ class SubscriptionsTest extends TestCase
     public function testSubscriptionGet()
     {
     
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $subscription = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
         
         $this->assertTrue(is_array($subscription));
 
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $subscriptions = $ninja->subscriptions->get($subscription['data']['id']);
 
@@ -61,8 +58,8 @@ class SubscriptionsTest extends TestCase
     public function testSubscriptionPut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $subscription = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
 
@@ -76,8 +73,8 @@ class SubscriptionsTest extends TestCase
     public function testSubscriptionPost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
         

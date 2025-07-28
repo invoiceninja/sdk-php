@@ -16,14 +16,12 @@ use PHPUnit\Framework\TestCase;
 
 class TasksTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
 
     public function testTasks()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $taks = $ninja->tasks->all();
 
@@ -34,8 +32,8 @@ class TasksTest extends TestCase
     public function testTaskGet()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $task = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);
@@ -50,8 +48,8 @@ class TasksTest extends TestCase
     public function testTaskPut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $task = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);
@@ -66,8 +64,8 @@ class TasksTest extends TestCase
     public function testTaskPost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $taks = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);        

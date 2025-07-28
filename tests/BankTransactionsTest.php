@@ -16,9 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class BankTransactionsTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
 
 
     public function setUp() :void
@@ -29,8 +26,8 @@ class BankTransactionsTest extends TestCase
 
     public function testBankTransactions()
     {
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 
@@ -43,8 +40,8 @@ class BankTransactionsTest extends TestCase
     public function testTransactionGet()
     {
     
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 
@@ -52,8 +49,8 @@ class BankTransactionsTest extends TestCase
         
         $this->assertTrue(is_array($transaction));
 
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $transactions = $ninja->bank_transactions->get($transaction['data']['id']);
 
@@ -65,8 +62,8 @@ class BankTransactionsTest extends TestCase
     public function testTransactionPut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 
@@ -82,8 +79,8 @@ class BankTransactionsTest extends TestCase
     public function testTransactionPost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
 

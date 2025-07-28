@@ -16,14 +16,11 @@ use PHPUnit\Framework\TestCase;
 
 class PurchaseOrdersTest extends TestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
     public function testPurchaseOrders()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
@@ -38,8 +35,8 @@ class PurchaseOrdersTest extends TestCase
     public function testPurchaseOrderGet()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
@@ -55,8 +52,8 @@ class PurchaseOrdersTest extends TestCase
     public function testPurchaseOrderPut()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
@@ -72,8 +69,8 @@ class PurchaseOrdersTest extends TestCase
     public function testPurchaseOrderPost()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
@@ -87,8 +84,8 @@ class PurchaseOrdersTest extends TestCase
     public function testPurchaseOrderPostWithItems()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
@@ -115,8 +112,8 @@ class PurchaseOrdersTest extends TestCase
     public function testPurchaseOrderPostWithMultiItems()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
@@ -149,8 +146,8 @@ class PurchaseOrdersTest extends TestCase
     public function testPurchaseOrderPostWithMultiItemsMarkSent()
     {
         
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 
@@ -184,8 +181,8 @@ class PurchaseOrdersTest extends TestCase
     public function testDownloadPurchaseOrder()
     {
 
-        $ninja = new InvoiceNinja($this->token);
-        $ninja->setUrl($this->url);
+        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
+        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
 
         $client = $ninja->vendors->create(['name' => 'Brand spanking new client']);
 

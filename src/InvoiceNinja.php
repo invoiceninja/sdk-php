@@ -35,6 +35,7 @@ use InvoiceNinja\Sdk\Endpoints\Tasks;
 use InvoiceNinja\Sdk\Endpoints\TaxRates;
 use InvoiceNinja\Sdk\Endpoints\Vendors;
 use InvoiceNinja\Sdk\Endpoints\Users;
+use InvoiceNinja\Sdk\Endpoints\Webhooks;
 use InvoiceNinja\Sdk\Exceptions\ApiException;
 
 class InvoiceNinja
@@ -50,7 +51,7 @@ class InvoiceNinja
 
 	private Client $httpClient;
 
-	public Clients $clients;
+    public Clients $clients;
 
 	public Invoices $invoices;
 
@@ -91,6 +92,8 @@ class InvoiceNinja
 	public BankTransactions $bank_transactions;
 
 	public BankIntegrations $bank_integrations;
+
+    public Webhooks $webhooks;
 	
     /**
      * @param string $token 
@@ -128,7 +131,8 @@ class InvoiceNinja
     	$this->subscriptions = new Subscriptions($this);
     	$this->purchase_orders = new PurchaseOrders($this);
     	$this->bank_transactions = new BankTransactions($this);
-    	$this->bank_integrations = new BankIntegrations($this);
+        $this->bank_integrations = new BankIntegrations($this);
+        $this->webhooks = new Webhooks($this);
     	
     	return $this;
     }
@@ -234,8 +238,8 @@ class InvoiceNinja
     }
 
 	/** 
-	 * @return Client  
-	 */
+	 * @return InvoiceNinja
+     */
 	private function httpClient()
 	{
 		$this->httpClient = new \GuzzleHttp\Client(

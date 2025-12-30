@@ -34,6 +34,10 @@ class ApiException extends \Exception
         $object = @json_decode($body);
         $error_array = [];
 
+        if (!$object) {
+            throw new self("Unable to decode response: '{$body}'.");
+        }
+
         if(property_exists($object, "message"))
             $error = $object->message;
 
@@ -47,10 +51,6 @@ class ApiException extends \Exception
             if(is_array($error_array) && count($error_array) >=1)
                 $error = $error_array[0];
 
-        }
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new self("Unable to decode response: '{$body}'.");
         }
 
         return $error;

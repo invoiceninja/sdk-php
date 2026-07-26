@@ -76,5 +76,15 @@ class BaseEntity
         return $this->ninja->stream("POST", "{$this->uri}/bulk", $query);
 
     }
+
+    public function downloadAsStream(array $entity, array $includes = [])
+    {
+        $data = ['ids' => $entity, 'action' => 'download', 'stream' => false];
+
+        $query = ['form_params' => $data, 'query' => $includes];
+
+        return $this->ninja->streamAsObject("POST", "{$this->uri}/bulk", $query);
+
+    }
 }
 

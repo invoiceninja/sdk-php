@@ -16,6 +16,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use InvoiceNinja\Sdk\Endpoints\BankIntegrations;
 use InvoiceNinja\Sdk\Endpoints\BankTransactions;
+use InvoiceNinja\Sdk\Endpoints\ClientGatewayTokens;
 use InvoiceNinja\Sdk\Endpoints\Clients;
 use InvoiceNinja\Sdk\Endpoints\Companies;
 use InvoiceNinja\Sdk\Endpoints\Credits;
@@ -93,6 +94,8 @@ class InvoiceNinja
 
 	public BankIntegrations $bank_integrations;
 
+    public ClientGatewayTokens $client_gateway_tokens;
+
     public Webhooks $webhooks;
 	
     /**
@@ -132,6 +135,7 @@ class InvoiceNinja
     	$this->purchase_orders = new PurchaseOrders($this);
     	$this->bank_transactions = new BankTransactions($this);
         $this->bank_integrations = new BankIntegrations($this);
+        $this->client_gateway_tokens = new ClientGatewayTokens($this);
         $this->webhooks = new Webhooks($this);
     	
     	return $this;
@@ -296,6 +300,31 @@ class InvoiceNinja
 			$body = $response->getBody();
 
 			return (string)$body;
+
+		}
+		catch(GuzzleException $e) {
+			
+            if (method_exists($e, 'hasResponse') && method_exists($e, 'getResponse') && $e->hasResponse()) 
+            	throw ApiException::createFromResponse($e->getResponse());
+                
+            throw new ApiException($e->getMessage(), $e->getCode());
+
+		}
+
+	}
+
+	public function streamAsObject(string $method, string $uri, array $payload)
+	{
+
+		$this->httpClient();
+
+		$url = $this->getUrl() . $uri;
+
+		try{
+		
+			$response =  $this->httpClient->request($method, $url, $payload);
+		
+			return $response->getBody();
 
 		}
 		catch(GuzzleException $e) {

@@ -12,12 +12,9 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class CreditsTest extends TestCase
+class CreditsTest extends IntegrationTestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
 
     public function testCredits()
     {

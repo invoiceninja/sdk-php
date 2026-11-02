@@ -11,46 +11,44 @@
 
 namespace InvoiceNinja\Sdk\Exceptions;
 
+use Psr\Http\Message\ResponseInterface;
+
 class ApiException extends \Exception
 {
-
-    public static function createFromResponse($response)
+    public static function createFromResponse(ResponseInterface $response, ?\Throwable $previous = null): self
     {
-        $error = static::parseResponseBody($response);
-
-        $field = null;
+        try {
+            $detail = static::parseResponseBody($response);
+        } catch (\JsonException $exception) {
+            $detail = 'Unable to decode response';
+            $previous ??= $exception;
+        }
 
         return new self(
-            "Error executing API call ({$error})}",
+            'Error executing API call (' . $detail . ')',
             $response->getStatusCode(),
-            $field
+            $previous
         );
     }
 
-    protected static function parseResponseBody($response)
+    protected static function parseResponseBody(ResponseInterface $response): string
     {
         $body = (string) $response->getBody();
-        $error = "";
-        $object = @json_decode($body);
-        $error_array = [];
+        $object = json_decode($body, false, 512, JSON_THROW_ON_ERROR | JSON_BIGINT_AS_STRING);
 
-        if(property_exists($object, "message"))
-            $error = $object->message;
-
-        if(property_exists($object, "errors"))
-        {
-            $properties = array_keys(get_object_vars($object->errors));
-
-            if(is_array($properties) && count($properties) >=1)
-                $error_array = $object->errors->{$properties[0]};
-
-            if(is_array($error_array) && count($error_array) >=1)
-                $error = $error_array[0];
-
+        if (!is_object($object)) {
+            return 'Unable to decode response';
         }
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new self("Unable to decode response: '{$body}'.");
+        $error = is_string($object->message ?? null) ? $object->message : '';
+
+        if (isset($object->errors) && is_object($object->errors)) {
+            $fields = get_object_vars($object->errors);
+            $messages = reset($fields);
+
+            if (is_array($messages) && isset($messages[0]) && is_string($messages[0])) {
+                $error = $messages[0];
+            }
         }
 
         return $error;

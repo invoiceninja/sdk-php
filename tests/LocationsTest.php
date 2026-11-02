@@ -13,12 +13,9 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class LocationsTest extends TestCase
+class LocationsTest extends IntegrationTestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
 
     public function testLocations()
     {

@@ -12,30 +12,17 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class GroupSettingsTest extends TestCase
+class GroupSettingsTest extends IntegrationTestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
-
-    public function setUp() :void
-    {
-        parent::setUp();
-        $this->faker = \Faker\Factory::create();
-    
-    }
-
     public function testAddGroupSetting()
     {
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $settings = new \stdClass;
-        $settings->currency_id = '1';
+        $settings = ['currency_id' => '1'];
 
-        $group_setting = $ninja->group_settings->create(['name' => $this->faker->firstName, 'settings' => $settings]);
+        $group_setting = $ninja->group_settings->create(['name' => $this->faker->uuid(), 'settings' => $settings]);
         
         $this->assertTrue(is_array($group_setting));
     
@@ -51,16 +38,14 @@ class GroupSettingsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $settings = new \stdClass;
-        $settings->currency_id = '1';
+        $settings = ['currency_id' => '1'];
 
-        $new_name = $this->faker->firstName;
+        $new_name = $this->faker->uuid();
         $group_setting = $ninja->group_settings->create(['name' => $new_name, 'settings' => $settings]);
         $this->assertTrue(is_array($group_setting));
     
-        $newer_name = $this->faker->firstName;
-        $settings = new \stdClass;
-        $settings->currency_id = '2';
+        $newer_name = $this->faker->uuid();
+        $settings = ['currency_id' => '2'];
         
         $updated_group_setting = $ninja->group_settings->update($group_setting['data']['id'], ['name' => $newer_name, 'settings' => $settings]);
 

@@ -18,6 +18,8 @@ class Client extends BaseModel
 {
     protected string $model = 'Client';
 
+    public ?string $id = null;
+
     /**
      *  The client name - required
      */
@@ -81,7 +83,7 @@ class Client extends BaseModel
      * The array of client contacts. This is optional, however
      * the API will always set a blank ClientContact if none are set
      * 
-     * @var ClientContact[]
+     * @var list<ClientContact>
      */
     public array $contacts = [];
 
@@ -251,6 +253,7 @@ class Client extends BaseModel
 
 
 
+    /** @var array<string, string> */
     protected array $rules = [
         'name' => 'required',
     ];
@@ -262,17 +265,20 @@ class Client extends BaseModel
 
     public function setContact(ClientContact $contact): self
     {
-        $this->contacts = array_merge($this->contacts, $contact);
+        $this->contacts[] = $contact;
 
         return $this;
     }
 
+    /**
+     * @return list<ClientContact>
+     */
     public function getContacts(): array
     {
         return $this->contacts;
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
     }

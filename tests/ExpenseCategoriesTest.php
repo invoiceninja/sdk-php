@@ -12,27 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class ExpenseCategoriesTest extends TestCase
+class ExpenseCategoriesTest extends IntegrationTestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
-
-    public function setUp() :void
-    {
-        parent::setUp();
-        $this->faker = \Faker\Factory::create();
-    
-    }
-
     public function testExpenseCategoriesPost()
     {
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->text(10)]);
+        $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->uuid()]);
         
         $this->assertTrue(is_array($expense_categories));
     
@@ -48,7 +36,7 @@ class ExpenseCategoriesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->text(10)]);
+        $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->uuid()]);
         
         $this->assertTrue(is_array($expense_categories));
 
@@ -68,11 +56,11 @@ class ExpenseCategoriesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $expense_category = $this->faker->text(10);
+        $expense_category = $this->faker->uuid();
         
         $expense_categories = $ninja->expense_categories->create(['name' => $expense_category]);
 
-        $expense_categories = $ninja->expense_categories->update($expense_categories['data']['id'], ['name' => $this->faker->text(10)]);
+        $expense_categories = $ninja->expense_categories->update($expense_categories['data']['id'], ['name' => $this->faker->uuid()]);
         
         $this->assertTrue(is_array($expense_categories));
         
@@ -85,7 +73,7 @@ class ExpenseCategoriesTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->firstName]);
+        $expense_categories = $ninja->expense_categories->create(['name' => $this->faker->uuid()]);
         
         $this->assertTrue(is_array($expense_categories));
         

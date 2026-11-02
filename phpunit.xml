@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" backupGlobals="false" backupStaticAttributes="false" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage>
-    <include>
-      <directory suffix=".php">src/</directory>
-    </include>
-  </coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         cacheDirectory=".phpunit.cache"
+         defaultTestSuite="Unit"
+         colors="true"
+         failOnWarning="true"
+         failOnRisky="true"
+         failOnDeprecation="true"
+         failOnPhpunitDeprecation="true"
+         failOnNotice="true"
+         failOnSkipped="true"
+         stopOnFailure="true"
+         failOnIncomplete="true">
   <testsuites>
-    <testsuite name="Test Suite">
+    <testsuite name="Unit">
+      <file>tests/BootTest.php</file>
+      <directory>tests/Invoice</directory>
+      <directory>tests/Unit</directory>
+    </testsuite>
+    <testsuite name="Integration">
       <directory>tests</directory>
+      <exclude>tests/BootTest.php</exclude>
+      <!-- Directory separators prevent PHPUnit 11 from also excluding InvoicesTest.php. -->
+      <exclude>tests/Invoice/</exclude>
+      <exclude>tests/Unit/</exclude>
     </testsuite>
   </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
   <php>
-    </php>
+    <ini name="error_reporting" value="-1"/>
+  </php>
 </phpunit>

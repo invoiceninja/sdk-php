@@ -11,7 +11,6 @@
 
 namespace InvoiceNinja\Sdk\Endpoints;
 
-use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
 class Companies 
@@ -26,32 +25,52 @@ class Companies
         $this->ninja = $ninja;
     }
 
-    public function all(array $search = [])
+    /**
+     * @param array<string, mixed> $search
+     *
+     * @return array<array-key, mixed>
+     */
+    public function all(array $search = []): array
     {
         $query = ['query' => $search];
 
         return $this->ninja->send("GET", "{$this->uri}", $query);
     }
 
-    public function get(string $entity_id, array $search = [])
+    /**
+     * @param array<string, mixed> $search
+     *
+     * @return array<array-key, mixed>
+     */
+    public function get(string $entity_id, array $search = []): array
     {
         $query = ['query' => $search];
 
         return $this->ninja->send("GET", "{$this->uri}/{$entity_id}", $query);
     }
 
-    public function update(string $entity_id, array $entity)
+    /**
+     * @param array<string, mixed> $entity
+     *
+     * @return array<array-key, mixed>
+     */
+    public function update(string $entity_id, array $entity): array
     {
         $query = ['form_params' => $entity];
 
         return $this->ninja->send("PUT", "{$this->uri}/{$entity_id}", $query);
     }
 
-    public function create(array $entity, array $includes = [])
+    /**
+     * @param array<string, mixed> $entity
+     * @param array<string, mixed> $includes
+     *
+     * @return array<array-key, mixed>
+     */
+    public function create(array $entity, array $includes = []): array
     {
         $query = ['form_params' => $entity, 'query' => $includes];
 
         return $this->ninja->send("POST", "{$this->uri}", $query);
     }
 }
-

@@ -11,75 +11,129 @@
 
 namespace InvoiceNinja\Sdk\Endpoints;
 
-use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\InvoiceNinja;
+use InvoiceNinja\Sdk\Exceptions\ApiException;
 
 class BaseEntity
 {
 
-    public function bulk(string $action, array $ids)
+    protected InvoiceNinja $ninja;
+
+    protected string $uri;
+
+    /**
+     * @param list<string> $ids
+     *
+     * @return array<array-key, mixed>
+     */
+    public function bulk(string $action, array $ids): array
     {
+        if ($action === 'download') {
+            throw new ApiException('Use download() for binary downloads.');
+        }
+
         $query['form_params'] = ["action" => $action, "ids" => $ids];
 
         return $this->ninja->send("POST", "{$this->uri}/bulk", $query);
     }
 
-    public function archive(array $entity_array)
+    /**
+     * @param list<string> $entity_array
+     *
+     * @return array<array-key, mixed>
+     */
+    public function archive(array $entity_array): array
     {
         return $this->bulk("archive", $entity_array);
     }
 
-    public function delete(array $entity_array)
+    /**
+     * @param list<string> $entity_array
+     *
+     * @return array<array-key, mixed>
+     */
+    public function delete(array $entity_array): array
     {
         return $this->bulk("delete", $entity_array);
     }
 
-    public function restore(array $entity_array)
+    /**
+     * @param list<string> $entity_array
+     *
+     * @return array<array-key, mixed>
+     */
+    public function restore(array $entity_array): array
     {
         return $this->bulk("restore", $entity_array);
     }
 
-    public function all(array $search = [])
+    /**
+     * @param array<string, mixed> $search
+     *
+     * @return array<array-key, mixed>
+     */
+    public function all(array $search = []): array
     {
         $query = ['query' => $search];
 
         return $this->ninja->send("GET", "{$this->uri}", $query);
     }
 
-    public function get(string $entity_id, array $search = [])
+    /**
+     * @param array<string, mixed> $search
+     *
+     * @return array<array-key, mixed>
+     */
+    public function get(string $entity_id, array $search = []): array
     {
         $query = ['query' => $search];
 
         return $this->ninja->send("GET", "{$this->uri}/{$entity_id}", $query);
     }
 
-    public function update(string $entity_id, array $entity)
+    /**
+     * @param array<string, mixed> $entity
+     *
+     * @return array<array-key, mixed>
+     */
+    public function update(string $entity_id, array $entity): array
     {
         $query = ['form_params' => $entity];
 
         return $this->ninja->send("PUT", "{$this->uri}/{$entity_id}", $query);
     }
 
-    public function model()
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function model(): array
     {
         return $this->ninja->send("GET", "{$this->uri}/create");
     }
     
-    public function create(array $entity, array $includes = [])
+    /**
+     * @param array<string, mixed> $entity
+     * @param array<string, mixed> $includes
+     *
+     * @return array<array-key, mixed>
+     */
+    public function create(array $entity, array $includes = []): array
     {
         $query = ['form_params' => $entity, 'query' => $includes];
 
         return $this->ninja->send("POST", "{$this->uri}", $query);
     }
 
-    public function download(array $entity, array $includes = [])
+    /**
+     * @param list<string> $entity
+     * @param array<string, mixed> $includes
+     */
+    public function download(array $entity, array $includes = []): string
     {
         $data = ['ids' => $entity, 'action' => 'download', 'stream' => false];
 
         $query = ['form_params' => $data, 'query' => $includes];
 
         return $this->ninja->stream("POST", "{$this->uri}/bulk", $query);
-
     }
 }
-

@@ -12,27 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class SubscriptionsTest extends TestCase
+class SubscriptionsTest extends IntegrationTestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
-
-
-    public function setUp() :void
-    {
-        parent::setUp();
-        $this->faker = \Faker\Factory::create();
-    }
-
     public function testSubscriptions()
     {
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
+        $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
         
         $this->assertTrue(is_array($subscriptions));
         
@@ -44,7 +32,7 @@ class SubscriptionsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $subscription = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
+        $subscription = $ninja->subscriptions->create(['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
         
         $this->assertTrue(is_array($subscription));
 
@@ -64,9 +52,9 @@ class SubscriptionsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $subscription = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
+        $subscription = $ninja->subscriptions->create(['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
 
-        $subscriptions = $ninja->subscriptions->update($subscription['data']['id'], ['name' => $this->faker->firstName]);
+        $subscriptions = $ninja->subscriptions->update($subscription['data']['id'], ['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
         
         $this->assertTrue(is_array($subscriptions));
         
@@ -79,7 +67,7 @@ class SubscriptionsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
+        $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
         
         $this->assertTrue(is_array($subscriptions));
         

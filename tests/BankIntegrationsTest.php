@@ -12,27 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class BankIntegrationsTest extends TestCase
+class BankIntegrationsTest extends IntegrationTestCase
 {
-    protected string $token = "company-token-test";
-    protected string $url = "http://ninja.test:8000";
-
-
-
-    public function setUp() :void
-    {
-        parent::setUp();
-        $this->faker = \Faker\Factory::create();
-    }
-
     public function testBankIntegrations()
     {
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
+        $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => 'SDK ' . $this->faker->firstName]);
 
         $this->assertTrue(is_array($bank_integrations));
         
@@ -44,7 +32,7 @@ class BankIntegrationsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $integration = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
+        $integration = $ninja->bank_integrations->create(['bank_account_name' => 'SDK ' . $this->faker->firstName]);
         
         $this->assertTrue(is_array($integration));
 
@@ -64,9 +52,9 @@ class BankIntegrationsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $integration = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
+        $integration = $ninja->bank_integrations->create(['bank_account_name' => 'SDK ' . $this->faker->firstName]);
 
-        $bank_integrations = $ninja->bank_integrations->update($integration['data']['id'], ['bank_account_name' => $this->faker->firstName]);
+        $bank_integrations = $ninja->bank_integrations->update($integration['data']['id'], ['bank_account_name' => 'SDK ' . $this->faker->firstName]);
         
         $this->assertTrue(is_array($bank_integrations));
         
@@ -79,7 +67,7 @@ class BankIntegrationsTest extends TestCase
         $ninja = new InvoiceNinja($this->token);
         $ninja->setUrl($this->url);
 
-        $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => $this->faker->firstName]);
+        $bank_integrations = $ninja->bank_integrations->create(['bank_account_name' => 'SDK ' . $this->faker->firstName]);
         
         $this->assertTrue(is_array($bank_integrations));
         

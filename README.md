@@ -23,7 +23,7 @@ $invoices = $ninja->invoices->all();
 
 Successful HEAD requests and empty 204/205 responses return `[]`. A nonempty body on HEAD/204/205 is rejected. Final non-2xx responses throw `ApiException` even with `http_errors=false`; this includes redirects that were not followed. The exception code contains the HTTP status, or `0` for a transport failure. Decoder and transport exceptions are retained as previous exceptions.
 
-`stream()` and `download()` return the original response bytes as a string, including empty downloads. Use `download()` for PDF/ZIP content; `bulk('download', ...)` is rejected before making a request. Static accessors such as `currencies()` return arrays and reject missing or non-array collections.
+`stream()` and `download()` return the original response bytes as a string, including empty downloads. `streamAsObject()` and `downloadAsStream()` return a PSR-7 `StreamInterface`; use `setOptions(['stream' => true])` for HTTP streaming without buffering the full download. Use `download()` for PDF/ZIP content; `bulk('download', ...)` is rejected before making a request. Static accessors such as `currencies()` return arrays and reject missing or non-array collections.
 
 These contracts replace the previous mixed/null behavior. Update direct callers and subclass overrides of `send()` when upgrading. Array return types validate the response container, not the contents of an entity schema.
 
@@ -48,6 +48,8 @@ These contracts replace the previous mixed/null behavior. Update direct callers 
 - Purchase Orders
 - Bank Integrations
 - Bank Transactions
+- Client Gateway Tokens
+- Webhooks
 
 ### Retrieving Models
 

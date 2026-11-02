@@ -10,6 +10,7 @@ use InvoiceNinja\Sdk\Models\ClientContact;
 use InvoiceNinja\Sdk\Models\ClientSettings;
 use InvoiceNinja\Sdk\Models\Invoice;
 use InvoiceNinja\Sdk\Models\InvoiceItem;
+use InvoiceNinja\Sdk\Models\Webhook;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -130,4 +131,29 @@ class ModelsTest extends TestCase
             self::assertStringContainsString('Unknown validation rule', $exception->getMessage());
         }
     }
+    public function testWebhookModelValidationAndSerialization(): void
+    {
+        $webhook = new Webhook();
+        try {
+            $webhook->save();
+            self::fail('A webhook needs an event and target URL.');
+        } catch (ModelValidationException $exception) {
+            self::assertSame(422, $exception->getCode());
+        }
+
+        $webhook->event_id = Webhook::EVENT_CREATE_CLIENT;
+        $webhook->target_url = 'https://example.test/webhooks';
+        $webhook->headers = ['X-Custom' => 'fixture'];
+        $webhook->save();
+
+        self::assertSame([], $webhook->getValidationErrors());
+        self::assertSame([
+            'event_id' => 1,
+            'target_url' => 'https://example.test/webhooks',
+            'format' => 'JSON',
+            'rest_method' => 'post',
+            'headers' => ['X-Custom' => 'fixture'],
+        ], json_decode(json_encode($webhook), true));
+    }
+
 }

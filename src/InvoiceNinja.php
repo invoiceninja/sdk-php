@@ -13,6 +13,9 @@ namespace InvoiceNinja\Sdk;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+use InvoiceNinja\Sdk\Endpoints\ClientGatewayTokens;
+use InvoiceNinja\Sdk\Endpoints\Webhooks;
 use InvoiceNinja\Sdk\Endpoints\Tasks;
 use InvoiceNinja\Sdk\Endpoints\Users;
 use InvoiceNinja\Sdk\Endpoints\Quotes;
@@ -96,6 +99,10 @@ class InvoiceNinja
 	public BankIntegrations $bank_integrations;
 
     public Locations $locations;
+
+    public ClientGatewayTokens $client_gateway_tokens;
+
+    public Webhooks $webhooks;
 	
     /**
      * @param string $token
@@ -135,6 +142,8 @@ class InvoiceNinja
     	$this->bank_transactions = new BankTransactions($this);
     	$this->bank_integrations = new BankIntegrations($this);
 		$this->locations = new Locations($this);
+        $this->client_gateway_tokens = new ClientGatewayTokens($this);
+        $this->webhooks = new Webhooks($this);
     	
     	return $this;
     }
@@ -283,6 +292,15 @@ class InvoiceNinja
     public function stream(string $method, string $uri, array $payload = []): string
     {
         return (string) $this->request($method, $uri, $payload)->getBody();
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     * @throws ApiException
+     */
+    public function streamAsObject(string $method, string $uri, array $payload = []): StreamInterface
+    {
+        return $this->request($method, $uri, $payload)->getBody();
     }
 
     /** @param array<string, mixed> $payload */

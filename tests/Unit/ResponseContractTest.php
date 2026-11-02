@@ -82,7 +82,12 @@ class ResponseContractTest extends TestCase
     {
         $sdk = $this->sdk(new Response($status));
 
-        self::assertSame($operation === 'send' ? [] : '', $sdk->{$operation}($method, '/api/v1/clients'));
+        $result = $sdk->{$operation}($method, '/api/v1/clients');
+        if ($operation === 'streamAsObject') {
+            self::assertSame('', $result->getContents());
+        } else {
+            self::assertSame($operation === 'send' ? [] : '', $result);
+        }
     }
 
     #[DataProvider('bodylessResponses')]
@@ -101,7 +106,7 @@ class ResponseContractTest extends TestCase
 
     public static function bodylessResponses(): iterable
     {
-        foreach (['send', 'stream'] as $operation) {
+        foreach (['send', 'stream', 'streamAsObject'] as $operation) {
             foreach ([['head', 200], ['HEAD', 201], ['HEAD', 204], ['GET', 204], ['POST', 205]] as [$method, $status]) {
                 yield "$operation $method $status" => [$operation, $method, $status];
             }
@@ -134,7 +139,7 @@ class ResponseContractTest extends TestCase
 
     public static function httpStatuses(): iterable
     {
-        foreach (['send', 'stream'] as $operation) {
+        foreach (['send', 'stream', 'streamAsObject'] as $operation) {
             foreach ([101, 199, 300, 302, 304, 307, 308, 400, 401, 403, 404, 422, 429, 500, 502, 503] as $status) {
                 yield "$operation $status" => [$operation, $status];
             }
@@ -163,7 +168,7 @@ class ResponseContractTest extends TestCase
 
     public static function errorBodies(): iterable
     {
-        foreach (['send', 'stream'] as $operation) {
+        foreach (['send', 'stream', 'streamAsObject'] as $operation) {
             foreach (['', '<html>private diagnostic</html>', 'null', '[]', '"private diagnostic"', "{\"name\":\"\xff\"}"] as $i => $body) {
                 yield "$operation body $i" => [$operation, $body];
             }
@@ -218,7 +223,7 @@ class ResponseContractTest extends TestCase
 
     public static function diagnosticOperations(): iterable
     {
-        foreach (['send', 'stream'] as $operation) {
+        foreach (['send', 'stream', 'streamAsObject'] as $operation) {
             foreach ([true, false] as $http_errors) {
                 yield "$operation http_errors " . (int) $http_errors => [$operation, $http_errors];
             }
@@ -284,6 +289,26 @@ class ResponseContractTest extends TestCase
         $this->expectExceptionCode(200);
         $this->expectExceptionMessage('Invalid JSON response.');
         $this->sdk(new Response(200))->send('GET', '/api/v1/clients');
+    }
+
+    public function testStreamObjectIsNotReadBufferedOrDecodedByTheSdk(): void
+    {
+        $body = new NoSeekStream(Utils::streamFor("%PDF-fixture\x00\xff"));
+        $history = [];
+        $stack = HandlerStack::create(new MockHandler([new Response(200, [], $body)]));
+        $stack->push(Middleware::history($history));
+        $sdk = (new InvoiceNinja('fixture'))->setUrl('https://example.test')->setOptions(['handler' => $stack]);
+
+        $stream = $sdk->streamAsObject('get', '/api/v1/invoices/bulk', ['stream' => true]);
+
+        self::assertSame($body, $stream);
+        self::assertSame(0, $stream->tell());
+        self::assertFalse($stream->eof());
+        self::assertSame('%PDF', $stream->read(4));
+        self::assertSame("-fixture\x00\xff", $stream->getContents());
+        self::assertSame('GET', $history[0]['request']->getMethod());
+        self::assertSame('fixture', $history[0]['request']->getHeaderLine('X-API-TOKEN'));
+        self::assertTrue($history[0]['options']['stream']);
     }
 
     private function sdk(Response $response, array $options = []): InvoiceNinja

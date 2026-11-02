@@ -53,6 +53,7 @@ class EndpointsTest extends TestCase
             'expenses', 'recurring_invoices', 'credits', 'projects', 'tasks',
             'vendors', 'users', 'companies', 'expense_categories', 'group_settings',
             'subscriptions', 'purchase_orders', 'bank_transactions', 'bank_integrations', 'locations',
+            'client_gateway_tokens', 'webhooks',
         ] as $property) {
             yield $property => [$property];
         }
@@ -214,4 +215,27 @@ class EndpointsTest extends TestCase
         self::assertCount(0, $history);
         self::assertCount(1, $mock);
     }
+    public function testDownloadAsStreamPreservesBodyAndRequestOptions(): void
+    {
+        $history = [];
+        $bytes = "%PDF-fixture\x00\xff\xfe";
+        $body = \GuzzleHttp\Psr7\Utils::streamFor($bytes);
+        $stack = HandlerStack::create(new MockHandler([new Response(200, [], $body)]));
+        $stack->push(Middleware::history($history));
+        $sdk = (new InvoiceNinja('fixture'))->setUrl('https://example.test')->setOptions([
+            'handler' => $stack, 'stream' => true,
+        ]);
+
+        $stream = $sdk->invoices->downloadAsStream(['fixture'], ['include' => 'documents']);
+
+        self::assertSame($body, $stream);
+        self::assertSame(0, $stream->tell());
+        self::assertSame($bytes, $stream->getContents());
+        self::assertSame('POST', $history[0]['request']->getMethod());
+        self::assertSame('https://example.test/api/v1/invoices/bulk?include=documents', (string) $history[0]['request']->getUri());
+        parse_str((string) $history[0]['request']->getBody(), $payload);
+        self::assertSame(['ids' => ['fixture'], 'action' => 'download', 'stream' => '0'], $payload);
+        self::assertTrue($history[0]['options']['stream']);
+    }
+
 }

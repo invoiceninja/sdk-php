@@ -19,6 +19,7 @@ class ReadOnlyDefaultsTest extends TestCase
         self::assertStringContainsString('TransportTest::', $output);
         self::assertStringNotContainsString('CompaniesTest::', $output);
         self::assertStringNotContainsString('ClientsTest::', $output);
+        self::assertStringNotContainsString('WebhooksTest::', $output);
     }
 
     public function testWriteIntegrationGateRejectsMissingAuthorization(): void

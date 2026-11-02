@@ -134,7 +134,7 @@ class TransportTest extends TestCase
 
     public static function responseErrors(): iterable
     {
-        foreach (['send', 'stream'] as $operation) {
+        foreach (['send', 'stream', 'streamAsObject'] as $operation) {
             yield $operation . ' message' => [$operation, 403, '{"message":"Forbidden"}', 'Forbidden'];
             yield $operation . ' unauthenticated' => [$operation, 401, '{"message":"Unauthenticated"}', 'Unauthenticated'];
             yield $operation . ' rate limited' => [$operation, 429, '{"message":"Too many requests"}', 'Too many requests'];
@@ -172,7 +172,7 @@ class TransportTest extends TestCase
 
     public static function failures(): iterable
     {
-        foreach (['send', 'stream'] as $operation) {
+        foreach (['send', 'stream', 'streamAsObject'] as $operation) {
             yield $operation . ' connection' => [$operation, ConnectException::class];
             yield $operation . ' request without response' => [$operation, RequestException::class];
         }

@@ -12,6 +12,7 @@
 namespace InvoiceNinja\Sdk\Endpoints;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
+use Psr\Http\Message\StreamInterface;
 use InvoiceNinja\Sdk\Exceptions\ApiException;
 
 class BaseEntity
@@ -135,5 +136,18 @@ class BaseEntity
         $query = ['form_params' => $data, 'query' => $includes];
 
         return $this->ninja->stream("POST", "{$this->uri}/bulk", $query);
+    }
+
+    /**
+     * @param list<string> $entity
+     * @param array<string, mixed> $includes
+     */
+    public function downloadAsStream(array $entity, array $includes = []): StreamInterface
+    {
+        $data = ['ids' => $entity, 'action' => 'download', 'stream' => false];
+
+        $query = ['form_params' => $data, 'query' => $includes];
+
+        return $this->ninja->streamAsObject("POST", "{$this->uri}/bulk", $query);
     }
 }

@@ -19,15 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 class CreateInvoiceTest extends TestCase
 {
-    public function setUp() :void
-    {
-        parent::setUp();
-        $this->faker = \Faker\Factory::create();
-    }
-
-    // $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-    // $ninja->setUrl($_ENV['INVOICENINJA_URL']);
-
     public function testInitInvoice()
     {
         $invoice = new Invoice();

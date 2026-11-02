@@ -27,4 +27,3 @@ class Webhooks extends BaseEntity
     }
 
 }
-

@@ -17,6 +17,16 @@ $invoices = $ninja->invoices->all();
 ```
 - To connect to a self hosted version use `->setUrl()` on the $ninja object.
 
+### Responses and errors
+
+`send()` and the entity/company JSON methods return arrays decoded from JSON objects or lists. Invalid JSON, scalar/null roots, and unexpected empty responses throw `InvoiceNinja\Sdk\Exceptions\ApiException`. Integers outside PHP's integer range are decoded as strings to preserve their value.
+
+Successful HEAD requests and empty 204/205 responses return `[]`. A nonempty body on HEAD/204/205 is rejected. Final non-2xx responses throw `ApiException` even with `http_errors=false`; this includes redirects that were not followed. The exception code contains the HTTP status, or `0` for a transport failure. Decoder and transport exceptions are retained as previous exceptions.
+
+`stream()` and `download()` return the original response bytes as a string, including empty downloads. `streamAsObject()` and `downloadAsStream()` return a PSR-7 `StreamInterface`; use `setOptions(['stream' => true])` for HTTP streaming without buffering the full download. Use `download()` for PDF/ZIP content; `bulk('download', ...)` is rejected before making a request. Static accessors such as `currencies()` return arrays and reject missing or non-array collections.
+
+These contracts replace the previous mixed/null behavior. Update direct callers and subclass overrides of `send()` when upgrading. Array return types validate the response container, not the contents of an entity schema.
+
 ### Supports
 
 - Clients
@@ -38,6 +48,8 @@ $invoices = $ninja->invoices->all();
 - Purchase Orders
 - Bank Integrations
 - Bank Transactions
+- Client Gateway Tokens
+- Webhooks
 
 ### Retrieving Models
 
@@ -205,13 +217,13 @@ $bulk = $ninja->invoices->bulk("archive", ["hash_1","hash_2"]);
 
 If you wanted to download a invoice PDF
 ```php
-    $pdf = $ninja->invoices->bulk("download", ["hash_1"]);
+    $pdf = $ninja->invoices->download(["hash_1"]);
 ```
 
 The following are a list of available bulk actions for invoices:
 
 + mark_sent
-+ download
++ download (use the `download()` helper)
 + restore
 + archive
 + delete
@@ -223,3 +235,45 @@ The following are a list of available bulk actions for invoices:
 + email
 
 For more examples of what can be achieved with the SDK, please inspect the tests folder in this repository. If you need clarity or more explicit examples of how to use the SDK, please create a issue.
+
+### Development and testing
+
+The SDK and development dependencies support PHP 8.2 and later. The current manifest uses PHPUnit 11, Guzzle 7 or 8, and Carbon 3. CI tests both Guzzle majors on PHP 8.2–8.5.
+
+Install dependencies and run the offline suite:
+
+```bash
+composer install
+composer test-unit
+```
+
+`composer test` performs a read-only authentication check followed by the offline suite. It does not run the CRUD integration tests or create API data. The bare PHPUnit command defaults to the offline suite as well.
+
+Copy `.env.example` to `.env` and set `INVOICE_NINJA_TEST_URL` and `INVOICE_NINJA_TEST_TOKEN`. The bootstrap loads `.env` from the repository root; exported shell/CI variables take precedence. `.env` is ignored by Git.
+
+```bash
+composer test-api   # GET /api/v1/ping only; fails immediately on rejection
+composer test       # Authentication check, then offline tests
+composer test-unit  # Offline tests without contacting the API
+```
+
+Invalid URLs, unreachable APIs, and rejected tokens stop the command. Tests never provision credentials, create accounts, reset databases, or change API state to make authentication succeed.
+
+The legacy integration suite performs CRUD operations. It is disabled unless `INVOICE_NINJA_ALLOW_WRITE_TESTS=1` is explicitly set for an authorized disposable API; `composer test-integration` checks this opt-in before contacting the API. Do not enable it for credential troubleshooting or a shared instance.
+
+Enable PCOV or Xdebug coverage mode, then run:
+
+```bash
+# With PCOV enabled in the CLI:
+composer test-coverage
+# With Xdebug installed:
+XDEBUG_MODE=coverage composer test-coverage
+```
+
+This runs the read-only authentication check and offline suite, writes `coverage/html/index.html` and `coverage/clover.xml`, and enforces 100% executable source line coverage. PHPUnit warnings, notices, deprecations, skipped tests, and incomplete tests fail the run. The coverage check measures line coverage, not branch/path coverage. The offline suite independently covers all executable source lines, so CI can enforce coverage without an API instance.
+
+Pull requests run the PHP/Guzzle compatibility matrix, a lowest-dependency job, locked-dependency coverage, and a security audit. The manually dispatched API job uses the same read-only authentication check and offline coverage commands.
+
+### Dependency compatibility notes
+
+Carbon 3 is now required; applications pinned to Carbon 2 must upgrade it. Guzzle 7.16.1+ and 8.3.1+ are supported. Use string header values (or non-empty arrays of strings) and associative arrays for nested form data, such as group settings, for compatibility with Guzzle 8. Request methods are normalized to uppercase consistently across both Guzzle majors.

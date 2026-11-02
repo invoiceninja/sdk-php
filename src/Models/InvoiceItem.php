@@ -78,6 +78,6 @@ class InvoiceItem extends BaseModel
      * By default the product type will
      * be used.
      */
-    public $type_id = self::TYPE_PRODUCT;
+    public string $type_id = self::TYPE_PRODUCT;
 
 }

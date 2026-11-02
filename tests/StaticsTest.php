@@ -12,16 +12,14 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class StaticsTest extends TestCase
+class StaticsTest extends IntegrationTestCase
 {
-
     public function testGetCurrencies()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $currencies = $ninja->statics->currencies();
 

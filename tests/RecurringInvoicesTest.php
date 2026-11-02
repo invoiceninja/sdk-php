@@ -12,15 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class RecurringInvoicesTest extends TestCase
+class RecurringInvoicesTest extends IntegrationTestCase
 {
+
     public function testInvoices()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
@@ -35,8 +35,8 @@ class RecurringInvoicesTest extends TestCase
     public function testInvoiceGet()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
@@ -52,8 +52,8 @@ class RecurringInvoicesTest extends TestCase
     public function testInvoicePut()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
@@ -69,8 +69,8 @@ class RecurringInvoicesTest extends TestCase
     public function testInvoicePost()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $invoices = $ninja->recurring_invoices->create(['frequency_id'=>1,'client_id' => $client['data']['id']]);

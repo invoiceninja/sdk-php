@@ -1,0 +1,9 @@
+includes:
+parameters:
+    level: 8
+    paths:
+        - src
+    excludePaths:
+        analyseAndScan:
+            - 'vendor'
+            - 'tests'

@@ -12,18 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class QuotesTest extends TestCase
+class QuotesTest extends IntegrationTestCase
 {
-
-
 
     public function testQuotes()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $quotes = $ninja->quotes->all();
 
@@ -34,8 +31,8 @@ class QuotesTest extends TestCase
     public function testQuoteGet()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $quote = $ninja->quotes->create(['client_id' => $client['data']['id']]);
@@ -50,8 +47,8 @@ class QuotesTest extends TestCase
     public function testQuotePut()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
@@ -67,8 +64,8 @@ class QuotesTest extends TestCase
     public function testQuotePost()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
 
         $quotes = $ninja->quotes->create(['client_id' => $client['data']['id']]);

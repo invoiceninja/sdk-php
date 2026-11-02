@@ -12,24 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class SubscriptionsTest extends TestCase
+class SubscriptionsTest extends IntegrationTestCase
 {
-
-
-    public function setUp() :void
-    {
-        parent::setUp();
-        $this->faker = \Faker\Factory::create();
-    }
-
     public function testSubscriptions()
     {
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
+        $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
         
         $this->assertTrue(is_array($subscriptions));
         
@@ -38,15 +29,15 @@ class SubscriptionsTest extends TestCase
     public function testSubscriptionGet()
     {
     
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $subscription = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
+        $subscription = $ninja->subscriptions->create(['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
         
         $this->assertTrue(is_array($subscription));
 
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $subscriptions = $ninja->subscriptions->get($subscription['data']['id']);
 
@@ -58,12 +49,12 @@ class SubscriptionsTest extends TestCase
     public function testSubscriptionPut()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $subscription = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
+        $subscription = $ninja->subscriptions->create(['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
 
-        $subscriptions = $ninja->subscriptions->update($subscription['data']['id'], ['name' => $this->faker->firstName]);
+        $subscriptions = $ninja->subscriptions->update($subscription['data']['id'], ['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
         
         $this->assertTrue(is_array($subscriptions));
         
@@ -73,10 +64,10 @@ class SubscriptionsTest extends TestCase
     public function testSubscriptionPost()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->firstName]);
+        $subscriptions = $ninja->subscriptions->create(['name' => $this->faker->uuid(), 'steps' => 'cart,auth.login-or-register']);
         
         $this->assertTrue(is_array($subscriptions));
         

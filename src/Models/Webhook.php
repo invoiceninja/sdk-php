@@ -109,9 +109,11 @@ class Webhook extends BaseModel
 
     /**
      *  The headers - default: empty
+     * @var array<string, string>|null
      */
     public ?array $headers = [];
 
+    /** @var array<string, string> */
     protected array $rules = [
         'event_id' => 'required',
         'target_url' => 'required',
@@ -120,7 +122,7 @@ class Webhook extends BaseModel
     /**
      * @throws ModelValidationException
      */
-    public function save()
+    public function save(): void
     {
         $this->validate();
     }

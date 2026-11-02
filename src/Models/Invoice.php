@@ -221,14 +221,13 @@ class Invoice extends BaseModel
      */
     public ?string $client_id = null;
 
+    /** @var array<string, string> */
     protected array $rules = [
         'client_id' => 'required',
         'date' => 'date',
         'due_date' => 'date',
         'partial_due_date' => 'date',
     ];
-
-    private array $validation_errors = [];
 
     public function __construct()
     {
@@ -249,9 +248,9 @@ class Invoice extends BaseModel
         return $this;
     }
 
-    public function addLine(InvoiceItem $item)
+    public function addLine(InvoiceItem $item): self
     {
-        $this->line_items = array_merge($this->line_items, $item);
+        $this->line_items[] = $item;
 
         return $this;
     }

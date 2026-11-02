@@ -12,16 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class TasksTest extends TestCase
+class TasksTest extends IntegrationTestCase
 {
 
     public function testTasks()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $taks = $ninja->tasks->all();
 
@@ -32,8 +31,8 @@ class TasksTest extends TestCase
     public function testTaskGet()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $task = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);
@@ -48,8 +47,8 @@ class TasksTest extends TestCase
     public function testTaskPut()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $task = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);
@@ -64,8 +63,8 @@ class TasksTest extends TestCase
     public function testTaskPost()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $taks = $ninja->tasks->create(['name' => 'Project', 'client_id' => $client['data']['id']]);        

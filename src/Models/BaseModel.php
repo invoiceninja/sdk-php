@@ -15,7 +15,13 @@ use InvoiceNinja\Sdk\Exceptions\ModelValidationException;
 
 class BaseModel
 {
+	/** @var list<array{error: string, code: int}> */
 	private array $validation_errors = [];
+
+    /** @var array<string, string> */
+    protected array $rules = [];
+
+    protected string $model;
 
     public function validate(): bool | ModelValidationException
     {
@@ -45,20 +51,26 @@ class BaseModel
         throw new ModelValidationException($this->getValidationErrors()[0]["error"] ,$this->getValidationErrors()[0]["code"]);
     }
 
-    private function resetValidationErrors()
+    private function resetValidationErrors(): self
     {
         $this->validation_errors = [];
 
         return $this;
     }
 
-    private function setValidationErrors($error): self
+    /**
+     * @param array{error: string, code: int} $error
+     */
+    private function setValidationErrors(array $error): self
     {
         $this->validation_errors[] = $error;
 
         return $this;
     }
 
+    /**
+     * @return list<array{error: string, code: int}>
+     */
     public function getValidationErrors(): array
     {
         return $this->validation_errors;
@@ -75,7 +87,10 @@ class BaseModel
             return true;
         }
         catch(\Exception $e) {
-            $this->setValidationErrors([$date_field => "Invalid date format for field {$date_field} - '{$this->{$date_field}}'"]);
+            $this->setValidationErrors([
+                "error" => "Invalid date format for field {$date_field} - '{$this->{$date_field}}'",
+                "code" => 422,
+            ]);
             return false;
         }
     }

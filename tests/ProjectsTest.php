@@ -12,15 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class ProjectsTest extends TestCase
+class ProjectsTest extends IntegrationTestCase
 {
+
     public function testProjects()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $projects = $ninja->projects->all();
 
@@ -31,8 +31,8 @@ class ProjectsTest extends TestCase
     public function testProjectGet()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $product = $ninja->projects->create(['name' => 'Project', 'client_id' => $client['data']['id']]);
@@ -47,8 +47,8 @@ class ProjectsTest extends TestCase
     public function testProjectPut()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $product = $ninja->projects->create(['name' => 'Project', 'client_id' => $client['data']['id']]);
@@ -63,8 +63,8 @@ class ProjectsTest extends TestCase
     public function testProjectPost()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $client = $ninja->clients->create(['name' => 'Brand spanking new client']);
         $projects = $ninja->projects->create(['name' => 'Project', 'client_id' => $client['data']['id']]);        

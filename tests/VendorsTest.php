@@ -12,14 +12,14 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class VendorsTest extends TestCase
+class VendorsTest extends IntegrationTestCase
 {
+
     public function testVendors()
     {
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $vendors = $ninja->vendors->create(['name' => 'Brand spanking new vendor']);
         
@@ -34,15 +34,15 @@ class VendorsTest extends TestCase
     public function testVendorGet()
     {
     
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $vendor = $ninja->vendors->create(['name' => 'Brand spanking new vendor']);
         
         $this->assertTrue(is_array($vendor));
 
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $vendors = $ninja->vendors->get($vendor['data']['id']);
 
@@ -54,8 +54,8 @@ class VendorsTest extends TestCase
     public function testVendorPut()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $vendor = $ninja->vendors->create(['name' => 'Brand spanking new vendor']);
 
@@ -69,8 +69,8 @@ class VendorsTest extends TestCase
     public function testVendorPost()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $vendors = $ninja->vendors->create(['name' => 'Brand spanking new vendor']);
         

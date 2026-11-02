@@ -12,15 +12,15 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class CompaniesTest extends TestCase
+class CompaniesTest extends IntegrationTestCase
 {
+
     public function testCompanies()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $companies = $ninja->companies->all();
 
@@ -31,11 +31,12 @@ class CompaniesTest extends TestCase
     public function testCompanyGet()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $company = $ninja->companies->create([], ['include' => 'company,company.tokens']);
-        $token = $company['data'][0]['company']['tokens'][0]['token'];
+        $company = $ninja->companies->create([], ['include' => 'company,token']);
+        $token = $company['data'][0]['token']['token'];
+        $this->assertNotEmpty($token);
         $ninja->setToken($token);
 
         $companies = $ninja->companies->get($company['data'][0]['company']['id']);
@@ -48,11 +49,12 @@ class CompaniesTest extends TestCase
     public function testCompanyPut()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $company = $ninja->companies->create([], ['include' => 'company,company.tokens']);
-        $token = $company['data'][0]['company']['tokens'][0]['token'];
+        $company = $ninja->companies->create([], ['include' => 'company,token']);
+        $token = $company['data'][0]['token']['token'];
+        $this->assertNotEmpty($token);
         $ninja->setToken($token);
         
         $companies = $ninja->companies->update($company['data'][0]['company']['id'], ['industry_id' => '1']);
@@ -65,8 +67,8 @@ class CompaniesTest extends TestCase
     public function testCompanyPost()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $companies = $ninja->companies->create([], ['include' => 'company']);
 

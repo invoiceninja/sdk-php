@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class BootTest extends TestCase
 {
-    /** @test */
     public function testInstanceInitiatization()
     {
 

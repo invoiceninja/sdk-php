@@ -11,7 +11,6 @@
 
 namespace InvoiceNinja\Sdk\Endpoints;
 
-use GuzzleHttp\Exception\GuzzleException;
 use InvoiceNinja\Sdk\Exceptions\ApiException;
 use InvoiceNinja\Sdk\InvoiceNinja;
 
@@ -20,72 +19,93 @@ class Statics
 
     protected InvoiceNinja $ninja;
 
-    private array $statics;
-
-    private array $keys = [
-        'currencies', 
-        'industries', 
-        'languages', 
-        'countries', 
-        'banks', 
-        'payment_types', 
-        'templates'
-    ];
-
     public function __construct(InvoiceNinja $ninja)
     {
         $this->ninja = $ninja;
     }
 
-    private function get(array $search = []) 
+    /**
+     * @param array<string, mixed> $search
+     *
+     * @return array<array-key, mixed>
+     */
+    private function get(array $search = []): array
     {
         return $this->ninja->send("GET", "/api/v1/statics", $search);
     }
 
-    public function currencies()
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function currencies(): array
     {
         return $this->getStaticByKey('currencies');
     }
 
-    public function industries()
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function industries(): array
     {
         return $this->getStaticByKey('industries');
     }
 
-    public function languages()
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function languages(): array
     {
         return $this->getStaticByKey('languages');
     }
 
-    public function countries()
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function countries(): array
     {
         return $this->getStaticByKey('countries');
     }
 
-    public function banks()
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function banks(): array
     {
         return $this->getStaticByKey('banks');
     }
 
-    public function payment_types()
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function payment_types(): array
     {
         return $this->getStaticByKey('payment_types');
     }
 
-    public function templates()
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function templates(): array
     {
         return $this->getStaticByKey('templates');
-    }    
+    }
 
-    private function getStaticByKey($key)
+    /**
+     * @return array<array-key, mixed>
+     */
+    private function getStaticByKey(string $key): array
     {
         $data = $this->get();
 
-        if(array_key_exists($key, $data))
+        if (array_key_exists($key, $data)) {
+            if (!is_array($data[$key])) {
+                throw new ApiException("Static data collection '{$key}' must be an array.");
+            }
+
             return $data[$key];
+        }
 
         throw new ApiException("Static data not found");
     }
 
 }
-

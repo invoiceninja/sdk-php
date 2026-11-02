@@ -13,9 +13,8 @@ namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
 use InvoiceNinja\Sdk\Models\Webhook;
-use PHPUnit\Framework\TestCase;
 
-class WebhooksTest extends TestCase
+class WebhooksTest extends IntegrationTestCase
 {
     /**
      * @warning testWebhookDelete() will delete all webhook records containing this string.
@@ -25,9 +24,9 @@ class WebhooksTest extends TestCase
 
     public function testWebhooks()
     {
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
-    
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
+
         $webhooks = $ninja->webhooks->all();
 
         $this->assertIsArray($webhooks);
@@ -36,8 +35,8 @@ class WebhooksTest extends TestCase
 
     public function testWebhookPost()
     {
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $model = new Webhook();
         $model->event_id = Webhook::EVENT_CREATE_CLIENT;
@@ -53,8 +52,8 @@ class WebhooksTest extends TestCase
 
     public function testWebhookPut()
     {
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $webhook = $ninja->webhooks->create([
             'event_id' => Webhook::EVENT_UPDATE_CLIENT,
@@ -69,13 +68,13 @@ class WebhooksTest extends TestCase
         $this->assertIsArray($webhooks);
 
         $this->assertContains($webhook_updated, $webhooks);
-        
+
     }
 
     public function testWebhookGet()
     {
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $webhook_created = $ninja->webhooks->create([
             'event_id' => Webhook::EVENT_CREATE_CLIENT,
@@ -92,8 +91,8 @@ class WebhooksTest extends TestCase
 
     public function testWebhookDelete()
     {
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $ninja->webhooks->create([
             'event_id' => Webhook::EVENT_CREATE_CLIENT,

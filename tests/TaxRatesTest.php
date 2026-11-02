@@ -12,22 +12,14 @@
 namespace InvoiceNinja\Sdk\Tests;
 
 use InvoiceNinja\Sdk\InvoiceNinja;
-use PHPUnit\Framework\TestCase;
 
-class TaxRatesTest extends TestCase
+class TaxRatesTest extends IntegrationTestCase
 {
-    public $faker;
-
-    protected function setUp(): void
-    {
-        $this->faker = \Faker\Factory::create();    
-    }
-
     public function testProducts()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
         $tax_rates = $ninja->tax_rates->all();
 
@@ -38,10 +30,10 @@ class TaxRatesTest extends TestCase
     public function testTaxRateGet()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $tax_rate = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->word()]);
+        $tax_rate = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->uuid()]);
 
         $tax_rates = $ninja->tax_rates->get($tax_rate['data']['id']);
 
@@ -53,12 +45,12 @@ class TaxRatesTest extends TestCase
     public function testTaxRatePut()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $tax_rate = $ninja->tax_rates->create(['rate' => 10, 'name' => 'GSTa']);
+        $tax_rate = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->uuid()]);
 
-        $tax_rates = $ninja->tax_rates->update($tax_rate['data']['id'], ['rate' => 10, 'name' => $this->faker->word()]);
+        $tax_rates = $ninja->tax_rates->update($tax_rate['data']['id'], ['rate' => 10, 'name' => $this->faker->uuid()]);
         
         $this->assertTrue(is_array($tax_rates));
         
@@ -68,10 +60,10 @@ class TaxRatesTest extends TestCase
     public function testTaxRatePost()
     {
         
-        $ninja = new InvoiceNinja($_ENV['INVOICENINJA_TOKEN']);
-        $ninja->setUrl($_ENV['INVOICENINJA_URL']);
+        $ninja = new InvoiceNinja($this->token);
+        $ninja->setUrl($this->url);
 
-        $tax_rates = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->word()]);
+        $tax_rates = $ninja->tax_rates->create(['rate' => 10, 'name' => $this->faker->uuid()]);
         
         $this->assertTrue(is_array($tax_rates));
         
